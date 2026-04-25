@@ -264,6 +264,7 @@ async function askGemini(question) {
       body: JSON.stringify({ contents, generationConfig: { temperature: 0.6, maxOutputTokens: 700 } })
     });
     const data = await res.json();
+    console.log("Gateway response:", data);
     if (data.error) return `⚠️ Lỗi Gateway: ${data.error.message || JSON.stringify(data.error)}`;
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Xin lỗi, chưa hiểu câu hỏi.";
     chatHistory.push({ role: "user", parts: [{ text: question }] }, { role: "model", parts: [{ text: reply }] });

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Quận 1 Foodie – Chatbot Gemini (Netlify AI Gateway)</title>
+<title>Quận 1 Foodie – Chatbot Gemini</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -37,6 +37,7 @@
   .filter-btn { transition: all 0.2s; cursor: pointer; }
   .page { display: none; }
   .page.active { display: block; }
+  /* Chat widget styles */
   .chat-widget{position:fixed;bottom:24px;right:24px;z-index:9999;}
   .chat-toggle{background:#E76F51;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,0.2);transition:0.2s;}
   .chat-toggle:hover{background:#d45a3a;transform:scale(1.05);}
@@ -57,6 +58,7 @@
 </head>
 <body>
 
+<!-- NAVBAR -->
 <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-amber-100 shadow-sm">
   <div class="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between">
     <div class="flex items-center gap-2 cursor-pointer group" onclick="showPage('home')">
@@ -70,6 +72,7 @@
   </div>
 </nav>
 
+<!-- HOME PAGE -->
 <div id="page-home" class="page active">
   <div class="hero-pattern text-white py-20 px-5 text-center relative">
     <div class="relative z-10 max-w-4xl mx-auto">
@@ -98,6 +101,7 @@
   </div>
 </div>
 
+<!-- LIST PAGE -->
 <div id="page-list" class="page">
   <div class="max-w-7xl mx-auto px-5 py-10">
     <div class="flex flex-wrap justify-between items-center mb-6 gap-3">
@@ -113,6 +117,7 @@
   </div>
 </div>
 
+<!-- DETAIL PAGE -->
 <div id="page-detail" class="page">
   <div class="max-w-4xl mx-auto px-5 py-10">
     <button onclick="showPage('list')" class="mb-6 inline-flex items-center gap-2 text-orange-500 font-semibold hover:text-orange-700 transition"><i class="fa fa-arrow-left"></i> Quay lại danh sách</button>
@@ -120,6 +125,7 @@
   </div>
 </div>
 
+<!-- CHATBOT WIDGET -->
 <div class="chat-widget">
   <div class="chat-toggle" id="chatToggle"><i class="fa-regular fa-comment-dots text-2xl text-white"></i></div>
   <div id="chatWindow" class="chat-window hidden">
@@ -169,9 +175,11 @@ const RESTAURANTS = [
   {id:35,name:"Basta Hiro",address:"Lầu 3, Saigon Centre, 65 Lê Lợi",category:"Ý",must_try:"Pesto Seafood Pizza, Mì Ý tươi",hours:"10h30-22h",price_range:"200-450K",tags:["Âu"],description:"Sang trọng, decor đẹp",image:"https://images.unsplash.com/photo-1593560704563-f176a2eb61db?w=400&h=280&fit=crop"},
   {id:36,name:"Mì Ý Double B",address:"TK40/24 Trần Hưng Đạo, Cầu Kho",category:"Ý bình dân",must_try:"Mì Ý sốt kem, sốt bò bằm",hours:"8h-22h",price_range:"40-90K",tags:["Âu"],description:"Giá bình dân, nổi tiếng ngon",image:"https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=400&h=280&fit=crop"}
 ];
+
 const FALLBACK_IMG = "https://picsum.photos/id/200/400/280";
 RESTAURANTS.forEach(r => { r.imgUrl = r.image || FALLBACK_IMG; });
 
+// ===================== UI RENDER =====================
 let currentFilter = "all";
 function tagClass(tag) {
   const map = { 'Chay':'tag-chay','Halal':'tag-halal','Âu':'tag-au','Á':'tag-a','Đặc sản':'tag-dacsan','Cafe':'tag-cafe' };
@@ -239,11 +247,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 window.showPage = showPage;
 
-// ===================== NETLIFY AI GATEWAY (thay URL sau khi tạo gateway) =====================
-// 👇 SAU KHI TẠO AI GATEWAY TRÊN NETLIFY, COPY URL VÀO ĐÂY (dạng https://tengateway.netlify.app/gemini)
-const GEMINI_GATEWAY_URL = "https://foodct.netlify.app/gemini"; // ← THAY URL THẬT CỦA BẠN
+// ===================== GEMINI CHATBOT (thay thế Coze) =====================
+// 👇 NHẬP API KEY CỦA BẠN VÀO ĐÂY (lấy từ https://aistudio.google.com/apikey)
+const GEMINI_API_KEY = "AIzaSyC-hWf4QcV1XHYAe3vPc3-9WE4xQbCNXqU"; // ← thay bằng key thật của bạn
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
-// Tạo context rút gọn từ dữ liệu 36 quán
+// Tạo context rút gọn từ dữ liệu 36 quán (chỉ gửi 1 lần)
 const lightContext = RESTAURANTS.map(r => `${r.name} (${r.tags.join(',')}) ${r.price_range} - món: ${r.must_try.split(',')[0]} - ${r.address}`).join('\n');
 const systemPrompt = `Bạn là trợ lý ẩm thực Quận 1, TP.HCM. Dựa vào danh sách quán sau (tên - tag - giá - món - địa chỉ):\n${lightContext}\nHãy trả lời câu hỏi bằng tiếng Việt, thân thiện, gợi ý cụ thể. Nếu câu hỏi ngoài phạm vi, hãy nói 'Tôi chỉ biết về quán ăn Quận 1.'`;
 
@@ -253,26 +262,24 @@ let chatHistory = [
 ];
 
 async function askGemini(question) {
-  if (!GEMINI_GATEWAY_URL || GEMINI_GATEWAY_URL === "https://foodct.netlify.app/gemini") {
-    return "⚠️ Bạn chưa cấu hình Gateway URL. Hãy tạo AI Gateway trên Netlify và dán URL vào code.";
-  }
+  if (!GEMINI_API_KEY) return "⚠️ Bạn chưa nhập API Key Gemini. Hãy lấy key miễn phí tại https://aistudio.google.com/apikey và dán vào code.";
   let contents = [...chatHistory, { role: "user", parts: [{ text: question }] }];
   try {
-    const res = await fetch(GEMINI_GATEWAY_URL, {
+    const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ contents, generationConfig: { temperature: 0.6, maxOutputTokens: 700 } })
     });
     const data = await res.json();
-    if (data.error) return `⚠️ Lỗi Gateway: ${data.error.message || JSON.stringify(data.error)}`;
+    if (data.error) return `⚠️ Lỗi Gemini: ${data.error.message}. Kiểm tra API key hoặc quota.`;
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Xin lỗi, chưa hiểu câu hỏi.";
     chatHistory.push({ role: "user", parts: [{ text: question }] }, { role: "model", parts: [{ text: reply }] });
     if (chatHistory.length > 12) chatHistory = [chatHistory[0], chatHistory[1], ...chatHistory.slice(-8)];
     return reply;
-  } catch(e) { return "🔌 Lỗi kết nối Gateway. Vui lòng kiểm tra mạng hoặc URL Gateway."; }
+  } catch(e) { return "🔌 Lỗi kết nối Gemini. Vui lòng kiểm tra mạng."; }
 }
 
-// Chat UI
+// ===================== CHAT UI =====================
 const chatToggle = document.getElementById("chatToggle");
 const chatWindow = document.getElementById("chatWindow");
 const closeChat = document.getElementById("closeChat");
