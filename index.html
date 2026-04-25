@@ -241,7 +241,7 @@ window.showPage = showPage;
 
 // ===================== NETLIFY AI GATEWAY (thay URL sau khi tạo gateway) =====================
 // 👇 SAU KHI TẠO AI GATEWAY TRÊN NETLIFY, COPY URL VÀO ĐÂY (dạng https://tengateway.netlify.app/gemini)
-const GEMINI_GATEWAY_URL = "https://foodct.netlify.app/gemini"; // ← THAY URL THẬT CỦA BẠN
+const GEMINI_GATEWAY_URL = "/.netlify/functions/gemini";// ← THAY URL THẬT CỦA BẠN
 
 // Tạo context rút gọn từ dữ liệu 36 quán
 const lightContext = RESTAURANTS.map(r => `${r.name} (${r.tags.join(',')}) ${r.price_range} - món: ${r.must_try.split(',')[0]} - ${r.address}`).join('\n');
