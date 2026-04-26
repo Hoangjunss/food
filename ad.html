@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Quận 1 Foodie – Chatbot Gemini</title>
+<title>Quận 1 Foodie – Chatbot Gemini & Groq</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -37,28 +37,41 @@
   .filter-btn { transition: all 0.2s; cursor: pointer; }
   .page { display: none; }
   .page.active { display: block; }
-  /* Chat widget styles */
-  .chat-widget{position:fixed;bottom:24px;right:24px;z-index:9999;}
-  .chat-toggle{background:#E76F51;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,0.2);transition:0.2s;}
-  .chat-toggle:hover{background:#d45a3a;transform:scale(1.05);}
-  .chat-window{position:fixed;bottom:96px;right:24px;width:380px;max-width:calc(100vw - 48px);height:520px;background:white;border-radius:28px;box-shadow:0 20px 35px -10px rgba(0,0,0,0.25);display:flex;flex-direction:column;overflow:hidden;transition:0.2s;z-index:10000;}
-  .chat-header{background:#264653;color:white;padding:14px 18px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
-  .chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;background:#fefaf5;}
-  .chat-input-area{display:flex;padding:12px;border-top:1px solid #eee;background:white;gap:8px;}
-  .chat-input-area input{flex:1;border:1px solid #e2e8f0;border-radius:40px;padding:10px 16px;outline:none;transition:0.2s;}
-  .chat-input-area input:focus{border-color:#E76F51;box-shadow:0 0 0 2px rgba(231,111,81,0.2);}
-  .chat-input-area button{background:#E76F51;border:none;border-radius:40px;padding:0 24px;color:white;font-weight:bold;cursor:pointer;transition:0.2s;}
-  .chat-input-area button:hover{background:#d45a3a;}
-  .message{max-width:85%;padding:10px 16px;border-radius:20px;font-size:0.9rem;line-height:1.4;}
-  .user{background:#264653;color:white;align-self:flex-end;border-bottom-right-radius:6px;}
-  .bot{background:#e9ecef;color:#1e293b;align-self:flex-start;border-bottom-left-radius:6px;}
-  .typing{font-style:italic;color:#6c757d;background:#f1f3f5;border-radius:20px;padding:10px 16px;}
-  @media (max-width:640px){.chat-window{width:300px;height:480px;right:12px;bottom:84px;}}
+  
+  /* Chat widget chung */
+  .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px; background: #fefaf5; }
+  .chat-input-area { display: flex; padding: 12px; border-top: 1px solid #eee; background: white; gap: 8px; }
+  .chat-input-area input { flex: 1; border: 1px solid #e2e8f0; border-radius: 40px; padding: 10px 16px; outline: none; transition: 0.2s; }
+  .chat-input-area input:focus { border-color: #E76F51; box-shadow: 0 0 0 2px rgba(231,111,81,0.2); }
+  .chat-input-area button { background: #E76F51; border: none; border-radius: 40px; padding: 0 24px; color: white; font-weight: bold; cursor: pointer; transition: 0.2s; }
+  .chat-input-area button:hover { background: #d45a3a; }
+  .message { max-width: 85%; padding: 10px 16px; border-radius: 20px; font-size: 0.9rem; line-height: 1.4; }
+  .user { background: #264653; color: white; align-self: flex-end; border-bottom-right-radius: 6px; }
+  .bot { background: #e9ecef; color: #1e293b; align-self: flex-start; border-bottom-left-radius: 6px; }
+  .typing { font-style: italic; color: #6c757d; background: #f1f3f5; border-radius: 20px; padding: 10px 16px; }
+  
+  /* Widget Gemini (phải) */
+  .chat-widget-gemini { position: fixed; bottom: 24px; right: 24px; z-index: 9999; }
+  .chat-toggle-gemini { background: #E76F51; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: 0.2s; }
+  .chat-toggle-gemini:hover { background: #d45a3a; transform: scale(1.05); }
+  .chat-window-gemini { position: fixed; bottom: 96px; right: 24px; width: 380px; max-width: calc(100vw - 48px); height: 520px; background: white; border-radius: 28px; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.25); display: flex; flex-direction: column; overflow: hidden; transition: 0.2s; z-index: 10000; }
+  .chat-header-gemini { background: #264653; color: white; padding: 14px 18px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+  
+  /* Widget Groq (trái) */
+  .chat-widget-groq { position: fixed; bottom: 24px; left: 24px; z-index: 9999; }
+  .chat-toggle-groq { background: #f97316; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: 0.2s; }
+  .chat-toggle-groq:hover { background: #ea580c; transform: scale(1.05); }
+  .chat-window-groq { position: fixed; bottom: 96px; left: 24px; width: 380px; max-width: calc(100vw - 48px); height: 520px; background: white; border-radius: 28px; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.25); display: flex; flex-direction: column; overflow: hidden; transition: 0.2s; z-index: 10000; }
+  .chat-header-groq { background: #1e293b; color: white; padding: 14px 18px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+  
+  @media (max-width:640px) {
+    .chat-window-gemini { width: 300px; height: 480px; right: 12px; bottom: 84px; }
+    .chat-window-groq { width: 300px; height: 480px; left: 12px; bottom: 84px; }
+  }
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-amber-100 shadow-sm">
   <div class="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between">
     <div class="flex items-center gap-2 cursor-pointer group" onclick="showPage('home')">
@@ -72,7 +85,7 @@
   </div>
 </nav>
 
-<!-- HOME PAGE -->
+<!-- Trang chủ, danh sách, chi tiết giữ nguyên (giống code gốc) -->
 <div id="page-home" class="page active">
   <div class="hero-pattern text-white py-20 px-5 text-center relative">
     <div class="relative z-10 max-w-4xl mx-auto">
@@ -101,7 +114,6 @@
   </div>
 </div>
 
-<!-- LIST PAGE -->
 <div id="page-list" class="page">
   <div class="max-w-7xl mx-auto px-5 py-10">
     <div class="flex flex-wrap justify-between items-center mb-6 gap-3">
@@ -117,7 +129,6 @@
   </div>
 </div>
 
-<!-- DETAIL PAGE -->
 <div id="page-detail" class="page">
   <div class="max-w-4xl mx-auto px-5 py-10">
     <button onclick="showPage('list')" class="mb-6 inline-flex items-center gap-2 text-orange-500 font-semibold hover:text-orange-700 transition"><i class="fa fa-arrow-left"></i> Quay lại danh sách</button>
@@ -125,13 +136,23 @@
   </div>
 </div>
 
-<!-- CHATBOT WIDGET -->
-<div class="chat-widget">
-  <div class="chat-toggle" id="chatToggle"><i class="fa-regular fa-comment-dots text-2xl text-white"></i></div>
-  <div id="chatWindow" class="chat-window hidden">
-    <div class="chat-header"><span><i class="fa-regular fa-message"></i> Gemini Assistant</span><i class="fa-solid fa-times cursor-pointer" id="closeChat"></i></div>
-    <div id="chatMessages" class="chat-messages"><div class="message bot">👋 Chào bạn! Tôi là trợ lý ẩm thực Quận 1 (Gemini). Hãy hỏi tôi về quán ăn, món ngon, giá cả...</div></div>
-    <div class="chat-input-area"><input type="text" id="chatInput" placeholder="Ví dụ: quán chay ngon, món halal, pizza..."><button id="sendChat">Gửi</button></div>
+<!-- CHATBOT GEMINI (phải) -->
+<div class="chat-widget-gemini">
+  <div class="chat-toggle-gemini" id="chatToggleGemini"><i class="fa-regular fa-comment-dots text-2xl text-white"></i></div>
+  <div id="chatWindowGemini" class="chat-window-gemini hidden">
+    <div class="chat-header-gemini"><span><i class="fa-regular fa-message"></i> Gemini Assistant</span><i class="fa-solid fa-times cursor-pointer" id="closeChatGemini"></i></div>
+    <div id="chatMessagesGemini" class="chat-messages"><div class="message bot">👋 Chào bạn! Tôi là trợ lý ẩm thực Quận 1 (Gemini). Hãy hỏi tôi về quán ăn, món ngon, giá cả...</div></div>
+    <div class="chat-input-area"><input type="text" id="chatInputGemini" placeholder="Ví dụ: quán chay ngon, món halal, pizza..."><button id="sendChatGemini">Gửi</button></div>
+  </div>
+</div>
+
+<!-- CHATBOT GROQ (trái) -->
+<div class="chat-widget-groq">
+  <div class="chat-toggle-groq" id="chatToggleGroq"><i class="fa-brands fa-gripfire text-2xl text-white"></i></div>
+  <div id="chatWindowGroq" class="chat-window-groq hidden">
+    <div class="chat-header-groq"><span><i class="fa-brands fa-gripfire"></i> Groq AI (Llama 3)</span><i class="fa-solid fa-times cursor-pointer" id="closeChatGroq"></i></div>
+    <div id="chatMessagesGroq" class="chat-messages"><div class="message bot">🔥 Chào bạn! Tôi là chatbot dùng Groq (Llama 3). Hãy hỏi tôi về quán ăn Quận 1 nhé!</div></div>
+    <div class="chat-input-area"><input type="text" id="chatInputGroq" placeholder="Hỏi về món ăn, quán..."><button id="sendChatGroq">Gửi</button></div>
   </div>
 </div>
 
@@ -176,10 +197,11 @@ const RESTAURANTS = [
   {id:36,name:"Mì Ý Double B",address:"TK40/24 Trần Hưng Đạo, Cầu Kho",category:"Ý bình dân",must_try:"Mì Ý sốt kem, sốt bò bằm",hours:"8h-22h",price_range:"40-90K",tags:["Âu"],description:"Giá bình dân, nổi tiếng ngon",image:"https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=400&h=280&fit=crop"}
 ];
 
+
+// ===================== HÀM HIỂN THỊ DANH SÁCH, FILTER, DETAIL (giữ nguyên) =====================
 const FALLBACK_IMG = "https://picsum.photos/id/200/400/280";
 RESTAURANTS.forEach(r => { r.imgUrl = r.image || FALLBACK_IMG; });
 
-// ===================== UI RENDER =====================
 let currentFilter = "all";
 function tagClass(tag) {
   const map = { 'Chay':'tag-chay','Halal':'tag-halal','Âu':'tag-au','Á':'tag-a','Đặc sản':'tag-dacsan','Cafe':'tag-cafe' };
@@ -246,73 +268,145 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("nav-home").classList.add("active");
 });
 window.showPage = showPage;
+// ===================== GEMINI CHATBOT (dùng proxy cũ) =====================
+const GEMINI_FUNCTION_URL = "/.netlify/functions/gemini"; // đảm bảo đúng
+const lightContextGemini = RESTAURANTS.map(r => `${r.name} (${r.tags.join(',')}) ${r.price_range} - món: ${r.must_try.split(',')[0]} - ${r.address}`).join('\n');
+const systemPromptGemini = `Bạn là trợ lý ẩm thực Quận 1, TP.HCM. Dựa vào danh sách quán sau (tên - tag - giá - món - địa chỉ):\n${lightContextGemini}\nHãy trả lời câu hỏi bằng tiếng Việt, thân thiện, gợi ý cụ thể. Nếu câu hỏi ngoài phạm vi, hãy nói 'Tôi chỉ biết về quán ăn Quận 1.'`;
 
-// ===================== GEMINI CHATBOT (thay thế Coze) =====================
-// 👇 NHẬP API KEY CỦA BẠN VÀO ĐÂY (lấy từ https://aistudio.google.com/apikey)
-const GEMINI_API_KEY = "AIzaSyC-hWf4QcV1XHYAe3vPc3-9WE4xQbCNXqU"; // ← thay bằng key thật của bạn
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-
-// Tạo context rút gọn từ dữ liệu 36 quán (chỉ gửi 1 lần)
-const lightContext = RESTAURANTS.map(r => `${r.name} (${r.tags.join(',')}) ${r.price_range} - món: ${r.must_try.split(',')[0]} - ${r.address}`).join('\n');
-const systemPrompt = `Bạn là trợ lý ẩm thực Quận 1, TP.HCM. Dựa vào danh sách quán sau (tên - tag - giá - món - địa chỉ):\n${lightContext}\nHãy trả lời câu hỏi bằng tiếng Việt, thân thiện, gợi ý cụ thể. Nếu câu hỏi ngoài phạm vi, hãy nói 'Tôi chỉ biết về quán ăn Quận 1.'`;
-
-let chatHistory = [
-  { role: "user", parts: [{ text: systemPrompt }] },
+let geminiHistory = [
+  { role: "user", parts: [{ text: systemPromptGemini }] },
   { role: "model", parts: [{ text: "OK, tôi sẵn sàng tư vấn ẩm thực Quận 1 cho bạn." }] }
 ];
 
 async function askGemini(question) {
-  if (!GEMINI_API_KEY) return "⚠️ Bạn chưa nhập API Key Gemini. Hãy lấy key miễn phí tại https://aistudio.google.com/apikey và dán vào code.";
-  let contents = [...chatHistory, { role: "user", parts: [{ text: question }] }];
+  let contents = [...geminiHistory, { role: "user", parts: [{ text: question }] }];
   try {
-    const res = await fetch(API_URL, {
+    const res = await fetch(GEMINI_FUNCTION_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contents, generationConfig: { temperature: 0.6, maxOutputTokens: 700 } })
+      body: JSON.stringify({ contents, generationConfig: { temperature: 0.6, maxOutputTokens: 4000 } })
     });
     const data = await res.json();
-    if (data.error) return `⚠️ Lỗi Gemini: ${data.error.message}. Kiểm tra API key hoặc quota.`;
+    if (data.error) return `⚠️ Lỗi Gemini: ${data.error.message || JSON.stringify(data.error)}`;
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Xin lỗi, chưa hiểu câu hỏi.";
-    chatHistory.push({ role: "user", parts: [{ text: question }] }, { role: "model", parts: [{ text: reply }] });
-    if (chatHistory.length > 12) chatHistory = [chatHistory[0], chatHistory[1], ...chatHistory.slice(-8)];
+    geminiHistory.push({ role: "user", parts: [{ text: question }] }, { role: "model", parts: [{ text: reply }] });
+    if (geminiHistory.length > 12) geminiHistory = [geminiHistory[0], geminiHistory[1], ...geminiHistory.slice(-8)];
     return reply;
-  } catch(e) { return "🔌 Lỗi kết nối Gemini. Vui lòng kiểm tra mạng."; }
+  } catch(e) { return "🔌 Lỗi kết nối Gemini."; }
 }
 
-// ===================== CHAT UI =====================
-const chatToggle = document.getElementById("chatToggle");
-const chatWindow = document.getElementById("chatWindow");
-const closeChat = document.getElementById("closeChat");
-const chatMessages = document.getElementById("chatMessages");
-const chatInput = document.getElementById("chatInput");
-const sendBtn = document.getElementById("sendChat");
-chatToggle.onclick = () => chatWindow.classList.toggle("hidden");
-closeChat.onclick = () => chatWindow.classList.add("hidden");
-function addMessage(text, user) {
+// Gemini UI
+const chatToggleGemini = document.getElementById("chatToggleGemini");
+const chatWindowGemini = document.getElementById("chatWindowGemini");
+const closeChatGemini = document.getElementById("closeChatGemini");
+const chatMessagesGemini = document.getElementById("chatMessagesGemini");
+const chatInputGemini = document.getElementById("chatInputGemini");
+const sendBtnGemini = document.getElementById("sendChatGemini");
+
+chatToggleGemini.onclick = () => chatWindowGemini.classList.toggle("hidden");
+closeChatGemini.onclick = () => chatWindowGemini.classList.add("hidden");
+
+function addMessageGemini(text, isUser) {
   const d = document.createElement("div");
-  d.className = `message ${user ? "user" : "bot"}`;
+  d.className = `message ${isUser ? "user" : "bot"}`;
   d.innerHTML = text.replace(/\n/g, "<br>");
-  chatMessages.appendChild(d);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+  chatMessagesGemini.appendChild(d);
+  chatMessagesGemini.scrollTop = chatMessagesGemini.scrollHeight;
 }
-function showTyping() { let d = document.createElement("div"); d.className = "typing"; d.id = "typingInd"; d.innerText = "Đang suy nghĩ..."; chatMessages.appendChild(d); chatMessages.scrollTop = chatMessages.scrollHeight; }
-function hideTyping() { document.getElementById("typingInd")?.remove(); }
-let processing = false;
-async function handleSend() {
-  if (processing) return;
-  const q = chatInput.value.trim();
+function showTypingGemini() { /* tương tự */ }
+function hideTypingGemini() { /* tương tự */ }
+
+let processingGemini = false;
+async function handleSendGemini() {
+  if (processingGemini) return;
+  const q = chatInputGemini.value.trim();
   if (!q) return;
-  addMessage(q, true);
-  chatInput.value = "";
-  processing = true;
-  showTyping();
+  addMessageGemini(q, true);
+  chatInputGemini.value = "";
+  processingGemini = true;
+  let typing = document.createElement("div"); typing.className = "typing"; typing.id = "typingGemini"; typing.innerText = "Đang suy nghĩ..."; chatMessagesGemini.appendChild(typing);
+  chatMessagesGemini.scrollTop = chatMessagesGemini.scrollHeight;
   const reply = await askGemini(q);
-  hideTyping();
-  addMessage(reply, false);
-  processing = false;
+  document.getElementById("typingGemini")?.remove();
+  addMessageGemini(reply, false);
+  processingGemini = false;
 }
-sendBtn.onclick = handleSend;
-chatInput.addEventListener("keypress", e => { if (e.key === "Enter") handleSend(); });
+sendBtnGemini.onclick = handleSendGemini;
+chatInputGemini.addEventListener("keypress", e => { if (e.key === "Enter") handleSendGemini(); });
+
+// ===================== GROQ CHATBOT (thêm mới) =====================
+const GROQ_FUNCTION_URL = "/.netlify/functions/groq";
+const lightContextGroq = RESTAURANTS.map(r => `${r.name} (${r.tags.join(',')}) ${r.price_range} - món: ${r.must_try.split(',')[0]} - ${r.address}`).join('\n');
+const systemPromptGroq = `Bạn là trợ lý ẩm thực Quận 1, TP.HCM. Dựa vào danh sách quán sau (tên - tag - giá - món - địa chỉ):\n${lightContextGroq}\nHãy trả lời câu hỏi bằng tiếng Việt, thân thiện, gợi ý cụ thể. Nếu câu hỏi ngoài phạm vi, hãy nói 'Tôi chỉ biết về quán ăn Quận 1.'`;
+
+let groqHistory = []; // sẽ lưu theo role user/assistant
+
+async function askGroq(question) {
+  const messages = [
+    { role: "system", content: systemPromptGroq },
+    ...groqHistory,
+    { role: "user", content: question }
+  ];
+  try {
+    const res = await fetch(GROQ_FUNCTION_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages: messages,
+        model: "llama-3.3-70b-versatile",
+        temperature: 0.7,
+        max_tokens: 800
+      })
+    });
+    const data = await res.json();
+    if (data.error) return `⚠️ Lỗi Groq: ${data.error.message}`;
+    const reply = data.choices[0]?.message?.content || "Xin lỗi, chưa hiểu câu hỏi.";
+    groqHistory.push({ role: "user", content: question });
+    groqHistory.push({ role: "assistant", content: reply });
+    if (groqHistory.length > 20) groqHistory = groqHistory.slice(-20);
+    return reply;
+  } catch(e) {
+    console.error(e);
+    return "🔌 Lỗi kết nối Groq.";
+  }
+}
+
+// Groq UI
+const chatToggleGroq = document.getElementById("chatToggleGroq");
+const chatWindowGroq = document.getElementById("chatWindowGroq");
+const closeChatGroq = document.getElementById("closeChatGroq");
+const chatMessagesGroq = document.getElementById("chatMessagesGroq");
+const chatInputGroq = document.getElementById("chatInputGroq");
+const sendBtnGroq = document.getElementById("sendChatGroq");
+
+chatToggleGroq.onclick = () => chatWindowGroq.classList.toggle("hidden");
+closeChatGroq.onclick = () => chatWindowGroq.classList.add("hidden");
+
+function addMessageGroq(text, isUser) {
+  const d = document.createElement("div");
+  d.className = `message ${isUser ? "user" : "bot"}`;
+  d.innerHTML = text.replace(/\n/g, "<br>");
+  chatMessagesGroq.appendChild(d);
+  chatMessagesGroq.scrollTop = chatMessagesGroq.scrollHeight;
+}
+
+let processingGroq = false;
+async function handleSendGroq() {
+  if (processingGroq) return;
+  const q = chatInputGroq.value.trim();
+  if (!q) return;
+  addMessageGroq(q, true);
+  chatInputGroq.value = "";
+  processingGroq = true;
+  let typing = document.createElement("div"); typing.className = "typing"; typing.id = "typingGroq"; typing.innerText = "Đang suy nghĩ..."; chatMessagesGroq.appendChild(typing);
+  chatMessagesGroq.scrollTop = chatMessagesGroq.scrollHeight;
+  const reply = await askGroq(q);
+  document.getElementById("typingGroq")?.remove();
+  addMessageGroq(reply, false);
+  processingGroq = false;
+}
+sendBtnGroq.onclick = handleSendGroq;
+chatInputGroq.addEventListener("keypress", e => { if (e.key === "Enter") handleSendGroq(); });
 </script>
 </body>
 </html>
