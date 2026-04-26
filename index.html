@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Quận 1 Foodie – Chatbot Gemini & Groq</title>
+<title>District 1 Foodie – Gemini & Groq Chatbots</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -22,11 +22,11 @@
     padding: 0.25rem 0.85rem; display: inline-flex; align-items: center; gap: 6px;
     backdrop-filter: blur(2px);
   }
-  .tag-chay { background: #dcfce7; color: #166534; border-left: 3px solid #22c55e; }
+  .tag-vegetarian { background: #dcfce7; color: #166534; border-left: 3px solid #22c55e; }
   .tag-halal { background: #ffedd5; color: #9a3412; border-left: 3px solid #f97316; }
-  .tag-au { background: #dbeafe; color: #1e3a8a; border-left: 3px solid #3b82f6; }
-  .tag-a { background: #ffe4e6; color: #9f1239; border-left: 3px solid #f43f5e; }
-  .tag-dacsan { background: #fef3c7; color: #854d0e; border-left: 3px solid #eab308; }
+  .tag-western { background: #dbeafe; color: #1e3a8a; border-left: 3px solid #3b82f6; }
+  .tag-asian { background: #ffe4e6; color: #9f1239; border-left: 3px solid #f43f5e; }
+  .tag-specialty { background: #fef3c7; color: #854d0e; border-left: 3px solid #eab308; }
   .tag-cafe { background: #f3f4f6; color: #374151; border-left: 3px solid #6b7280; }
   .nav-link { position: relative; padding-bottom: 4px; transition: color 0.2s; cursor: pointer; }
   .nav-link.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2.5px; background: #E76F51; border-radius: 3px; }
@@ -38,7 +38,7 @@
   .page { display: none; }
   .page.active { display: block; }
   
-  /* Chat widget chung */
+  /* Chat widget common */
   .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px; background: #fefaf5; }
   .chat-input-area { display: flex; padding: 12px; border-top: 1px solid #eee; background: white; gap: 8px; }
   .chat-input-area input { flex: 1; border: 1px solid #e2e8f0; border-radius: 40px; padding: 10px 16px; outline: none; transition: 0.2s; }
@@ -50,14 +50,14 @@
   .bot { background: #e9ecef; color: #1e293b; align-self: flex-start; border-bottom-left-radius: 6px; }
   .typing { font-style: italic; color: #6c757d; background: #f1f3f5; border-radius: 20px; padding: 10px 16px; }
   
-  /* Widget Gemini (phải) */
+  /* Gemini widget (right) */
   .chat-widget-gemini { position: fixed; bottom: 24px; right: 24px; z-index: 9999; }
   .chat-toggle-gemini { background: #E76F51; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: 0.2s; }
   .chat-toggle-gemini:hover { background: #d45a3a; transform: scale(1.05); }
   .chat-window-gemini { position: fixed; bottom: 96px; right: 24px; width: 380px; max-width: calc(100vw - 48px); height: 520px; background: white; border-radius: 28px; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.25); display: flex; flex-direction: column; overflow: hidden; transition: 0.2s; z-index: 10000; }
   .chat-header-gemini { background: #264653; color: white; padding: 14px 18px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
   
-  /* Widget Groq (trái) */
+  /* Groq widget (left) */
   .chat-widget-groq { position: fixed; bottom: 24px; left: 24px; z-index: 9999; }
   .chat-toggle-groq { background: #f97316; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: 0.2s; }
   .chat-toggle-groq:hover { background: #ea580c; transform: scale(1.05); }
@@ -76,143 +76,158 @@
   <div class="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between">
     <div class="flex items-center gap-2 cursor-pointer group" onclick="showPage('home')">
       <span class="text-3xl drop-shadow">🍜</span>
-      <span class="logo-font font-bold text-xl tracking-tight text-amber-800 group-hover:text-orange-600 transition">Quận 1 <span class="text-orange-500">Foodie</span></span>
+      <span class="logo-font font-bold text-xl tracking-tight text-amber-800 group-hover:text-orange-600 transition">District 1 <span class="text-orange-500">Foodie</span></span>
     </div>
     <div class="flex gap-7 text-sm font-semibold">
-      <a class="nav-link text-gray-700 hover:text-orange-600" id="nav-home" onclick="showPage('home')"><i class="fa fa-home mr-1"></i>Trang chủ</a>
-      <a class="nav-link text-gray-700 hover:text-orange-600" id="nav-list" onclick="showPage('list')"><i class="fa fa-utensils mr-1"></i>Khám phá</a>
+      <a class="nav-link text-gray-700 hover:text-orange-600" id="nav-home" onclick="showPage('home')"><i class="fa fa-home mr-1"></i>Home</a>
+      <a class="nav-link text-gray-700 hover:text-orange-600" id="nav-list" onclick="showPage('list')"><i class="fa fa-utensils mr-1"></i>Explore</a>
     </div>
   </div>
 </nav>
 
-<!-- Trang chủ, danh sách, chi tiết giữ nguyên (giống code gốc) -->
+<!-- Home Page -->
 <div id="page-home" class="page active">
   <div class="hero-pattern text-white py-20 px-5 text-center relative">
     <div class="relative z-10 max-w-4xl mx-auto">
-      <p class="text-sm font-semibold tracking-widest uppercase mb-3 text-amber-200">✨ Ẩm thực tinh hoa Sài Gòn ✨</p>
-      <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-4">Góc ngon Quận 1</h1>
-      <p class="text-lg md:text-xl text-white/90 max-w-xl mx-auto mb-8">36 quán đặc sắc – từ gánh hàng rong đến nhà hàng sang trọng, đủ vị cho mọi tín đồ ẩm thực</p>
-      <button onclick="showPage('list')" class="bg-white text-orange-600 font-bold px-9 py-3 rounded-full shadow-lg hover:shadow-xl transition-all text-base"><i class="fa fa-compass mr-2"></i>Khám phá ngay</button>
+      <p class="text-sm font-semibold tracking-widest uppercase mb-3 text-amber-200">✨ The Essence of Saigon Cuisine ✨</p>
+      <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-4">District 1 Foodie Corner</h1>
+      <p class="text-lg md:text-xl text-white/90 max-w-xl mx-auto mb-8">36 unique spots – from street food stalls to fine dining, every flavor for every food lover.</p>
+      <button onclick="showPage('list')" class="bg-white text-orange-600 font-bold px-9 py-3 rounded-full shadow-lg hover:shadow-xl transition-all text-base"><i class="fa fa-compass mr-2"></i>Explore Now</button>
     </div>
   </div>
   <div class="max-w-7xl mx-auto px-5 py-16">
     <div class="flex items-center justify-between mb-8 flex-wrap gap-3">
-      <div><h2 class="text-3xl font-bold text-gray-800">🍽️ <span class="border-b-4 border-orange-400 pb-1">Món</span> không thể bỏ qua</h2><p class="text-gray-500 mt-1">Gợi ý từ những quán nổi tiếng nhất Quận 1</p></div>
-      <button onclick="showPage('list')" class="text-orange-500 font-semibold hover:text-orange-700 transition">Xem tất cả <i class="fa fa-arrow-right ml-1"></i></button>
+      <div><h2 class="text-3xl font-bold text-gray-800">🍽️ <span class="border-b-4 border-orange-400 pb-1">Must-try</span> Dishes</h2><p class="text-gray-500 mt-1">Recommendations from the most famous restaurants in District 1</p></div>
+      <button onclick="showPage('list')" class="text-orange-500 font-semibold hover:text-orange-700 transition">View All <i class="fa fa-arrow-right ml-1"></i></button>
     </div>
     <div id="mustTryGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"></div>
   </div>
   <div class="bg-gradient-to-r from-amber-50 to-orange-50 py-12 my-6">
     <div class="max-w-5xl mx-auto px-5 text-center">
       <i class="fa fa-quote-left text-4xl text-orange-300 mb-3"></i>
-      <p class="text-lg italic text-gray-700">"Sài Gòn không chỉ có phở, mà còn cả một trời tinh hoa ẩm thực trong từng con hẻm nhỏ."</p>
+      <p class="text-lg italic text-gray-700">"Saigon is not just about pho – it's a whole universe of culinary wonders hidden in every small alley."</p>
     </div>
   </div>
   <div class="max-w-7xl mx-auto px-5 py-12">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6"><i class="fa fa-fire text-orange-500 mr-2"></i> Quán được yêu thích</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-6"><i class="fa fa-fire text-orange-500 mr-2"></i> Popular Restaurants</h2>
     <div id="featuredGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7"></div>
   </div>
 </div>
 
+<!-- List Page -->
 <div id="page-list" class="page">
   <div class="max-w-7xl mx-auto px-5 py-10">
     <div class="flex flex-wrap justify-between items-center mb-6 gap-3">
-      <div><h2 class="text-3xl font-bold text-gray-800">📋 Tất cả quán</h2><p class="text-gray-500"><span id="totalCount">36</span> quán – từ bình dân đến cao cấp</p></div>
+      <div><h2 class="text-3xl font-bold text-gray-800">📋 All Restaurants</h2><p class="text-gray-500"><span id="totalCount">36</span> restaurants – from budget to high-end</p></div>
     </div>
     <div class="flex flex-wrap gap-2 my-4" id="filterBar"></div>
     <div class="relative mb-8">
       <i class="fa fa-search absolute left-4 top-3.5 text-gray-400"></i>
-      <input id="searchInput" type="text" placeholder="Tìm theo tên quán, món ăn..." class="w-full pl-11 pr-4 py-3 rounded-xl border border-orange-200 bg-white shadow-sm focus:border-orange-400 focus:ring-2 focus:ring-orange-200 transition">
+      <input id="searchInput" type="text" placeholder="Search by restaurant name or dish..." class="w-full pl-11 pr-4 py-3 rounded-xl border border-orange-200 bg-white shadow-sm focus:border-orange-400 focus:ring-2 focus:ring-orange-200 transition">
     </div>
     <div id="restaurantGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7"></div>
-    <p id="noResult" class="text-center text-gray-400 py-16 hidden">😢 Không tìm thấy quán nào phù hợp. Thử từ khóa khác nhé!</p>
+    <p id="noResult" class="text-center text-gray-400 py-16 hidden">😢 No matching restaurants found. Try a different keyword!</p>
   </div>
 </div>
 
+<!-- Detail Page -->
 <div id="page-detail" class="page">
   <div class="max-w-4xl mx-auto px-5 py-10">
-    <button onclick="showPage('list')" class="mb-6 inline-flex items-center gap-2 text-orange-500 font-semibold hover:text-orange-700 transition"><i class="fa fa-arrow-left"></i> Quay lại danh sách</button>
+    <button onclick="showPage('list')" class="mb-6 inline-flex items-center gap-2 text-orange-500 font-semibold hover:text-orange-700 transition"><i class="fa fa-arrow-left"></i> Back to list</button>
     <div id="detailContent"></div>
   </div>
 </div>
 
-<!-- CHATBOT GEMINI (phải) -->
+<!-- Gemini Chatbot (right) -->
 <div class="chat-widget-gemini">
   <div class="chat-toggle-gemini" id="chatToggleGemini"><i class="fa-regular fa-comment-dots text-2xl text-white"></i></div>
   <div id="chatWindowGemini" class="chat-window-gemini hidden">
     <div class="chat-header-gemini"><span><i class="fa-regular fa-message"></i> Gemini Assistant</span><i class="fa-solid fa-times cursor-pointer" id="closeChatGemini"></i></div>
-    <div id="chatMessagesGemini" class="chat-messages"><div class="message bot">👋 Chào bạn! Tôi là trợ lý ẩm thực Quận 1 (Gemini). Hãy hỏi tôi về quán ăn, món ngon, giá cả...</div></div>
-    <div class="chat-input-area"><input type="text" id="chatInputGemini" placeholder="Ví dụ: quán chay ngon, món halal, pizza..."><button id="sendChatGemini">Gửi</button></div>
+    <div id="chatMessagesGemini" class="chat-messages"><div class="message bot">👋 Hi! I'm your District 1 food assistant (Gemini). Ask me about restaurants, dishes, prices...</div></div>
+    <div class="chat-input-area"><input type="text" id="chatInputGemini" placeholder="e.g., vegetarian restaurant, halal food, pizza..."><button id="sendChatGemini">Send</button></div>
   </div>
 </div>
 
-<!-- CHATBOT GROQ (trái) -->
+<!-- Groq Chatbot (left) -->
 <div class="chat-widget-groq">
   <div class="chat-toggle-groq" id="chatToggleGroq"><i class="fa-brands fa-gripfire text-2xl text-white"></i></div>
   <div id="chatWindowGroq" class="chat-window-groq hidden">
     <div class="chat-header-groq"><span><i class="fa-brands fa-gripfire"></i> Groq AI (Llama 3)</span><i class="fa-solid fa-times cursor-pointer" id="closeChatGroq"></i></div>
-    <div id="chatMessagesGroq" class="chat-messages"><div class="message bot">🔥 Chào bạn! Tôi là chatbot dùng Groq (Llama 3). Hãy hỏi tôi về quán ăn Quận 1 nhé!</div></div>
-    <div class="chat-input-area"><input type="text" id="chatInputGroq" placeholder="Hỏi về món ăn, quán..."><button id="sendChatGroq">Gửi</button></div>
+    <div id="chatMessagesGroq" class="chat-messages"><div class="message bot">🔥 Hi! I'm a Groq chatbot (Llama 3). Ask me about District 1 restaurants!</div></div>
+    <div class="chat-input-area"><input type="text" id="chatInputGroq" placeholder="Ask about food, price, location..."><button id="sendChatGroq">Send</button></div>
   </div>
 </div>
 
 <script>
-// ===================== DỮ LIỆU 36 QUÁN =====================
+// ===================== RESTAURANTS DATA (ENGLISH, WITH ENGLISH TAGS) =====================
 const RESTAURANTS = [
-  {id:1,name:"Halal@Saigon",address:"31 Đông Du, P. Bến Nghé",category:"Đạo Hồi (Halal)",must_try:"Cơm chiên Nasi Goreng, Cà ri dê",hours:"10h-22h",price_range:"80-150K",tags:["Halal"],description:"Không gian ấm cúng, đối diện Thánh đường Hồi giáo",image:"https://images.unsplash.com/photo-1633949275505-b6b4c79f1f0c?w=400&h=280&fit=crop"},
-  {id:2,name:"Kampung Melayu",address:"31 Nguyễn An Ninh, P. Bến Thành",category:"Đạo Hồi (Halal)",must_try:"Trà sữa kéo, Cơm gà",hours:"6h-23h",price_range:"40-90K",tags:["Halal"],description:"Bình dân, nhộn nhịp, đậm chất Malaysia",image:"https://images.unsplash.com/photo-1585938389618-31a6b4c5c1f5?w=400&h=280&fit=crop"},
-  {id:3,name:"The Daun Halal",address:"48 Lê Lai, P. Bến Thành",category:"Đạo Hồi (Halal)",must_try:"Cá nướng Sambal, Súp Tomyum",hours:"10h-22h30",price_range:"100-200K",tags:["Halal"],description:"View công viên 23/09, hiện đại",image:"https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=400&h=280&fit=crop"},
-  {id:4,name:"Taj Mahal",address:"241 Bùi Viện, P. Phạm Ngũ Lão",category:"Đạo Hồi (Ấn Độ)",must_try:"Bánh Naan, Cà ri gà Masala",hours:"10h-23h",price_range:"150-300K",tags:["Halal"],description:"Khu phố Tây sầm uất, đậm chất Ấn Độ",image:"https://images.unsplash.com/photo-1585938389618-31a6b4c5c1f5?w=400&h=280&fit=crop"},
-  {id:5,name:"Phở Muslim",address:"Hẻm 505 Trần Hưng Đạo, P. Cầu Kho",category:"Đạo Hồi (Việt Nam)",must_try:"Phở bò Halal, Cà ri bò kiểu Chăm",hours:"6h-11h30",price_range:"30-60K",tags:["Halal"],description:"Quán vỉa hè trong hẻm, giá rẻ",image:"https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=400&h=280&fit=crop"},
-  {id:6,name:"Ẩm Thực Chay Tuệ",address:"162 Trần Hưng Đạo, P. Nguyễn Cư Trinh",category:"Chay",must_try:"Lẩu Nhà Tuệ, Miến trộn Thái",hours:"9h30-22h",price_range:"80-180K",tags:["Chay"],description:"Sang trọng thanh tịnh",image:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=280&fit=crop"},
-  {id:7,name:"Mãn Tự Vegan",address:"201 Nguyễn Thị Minh Khai, P. Nguyễn Cư Trinh",category:"Chay",must_try:"Buffet chay đa dạng",hours:"11h-21h",price_range:"70-150K",tags:["Chay"],description:"Không gian mộc mạc, gần gũi",image:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=280&fit=crop"},
-  {id:8,name:"Shanti Veggie",address:"8 Lương Hữu Khánh, P. Phạm Ngũ Lão",category:"Chay",must_try:"Cơm cháy kho quẹt, Lẩu nấm chua cay",hours:"9h30-21h30",price_range:"60-120K",tags:["Chay"],description:"Yên tĩnh, decor cây xanh",image:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=280&fit=crop"},
-  {id:9,name:"Vị Quê Kitchen (Bib gourmand)",address:"110 Sương Nguyệt Ánh, P. Bến Thành",category:"Chay",must_try:"Nem vuông nấm, Bún Vị Quê",hours:"10h-22h",price_range:"90-200K",tags:["Chay"],description:"Hiện đại, đồ ăn đẹp mắt",image:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=280&fit=crop"},
-  {id:10,name:"Hoa Khai Chay",address:"124 Nguyễn Cư Trinh, P. Nguyễn Cư Trinh",category:"Chay",must_try:"Lẩu nấm, Sườn non chiên sả",hours:"9h30-22h",price_range:"70-160K",tags:["Chay"],description:"Rộng rãi, phù hợp nhóm đông",image:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=280&fit=crop"},
-  {id:11,name:"Pizza 4P's",address:"8/15 Lê Thánh Tôn, P. Bến Nghé",category:"Âu - Á (Nhật)",must_try:"Pizza phô mai Burrata",hours:"10h-21h",price_range:"200-400K",tags:["Âu"],description:"Bếp mở, decor đẹp",image:"https://images.unsplash.com/photo-1593560704563-f176a2eb61db?w=400&h=280&fit=crop"},
-  {id:12,name:"Moo Beef Steak",address:"35 Ngô Đức Kế, P. Bến Nghé",category:"Âu (Mỹ)",must_try:"Thăn ngoại bò nướng bơ",hours:"10h30-21h30",price_range:"250-600K",tags:["Âu"],description:"View phố đi bộ Nguyễn Huệ",image:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=280&fit=crop"},
-  {id:13,name:"48 Bistro",address:"52 Lê Thị Riêng, P. Bến Thành",category:"Âu (Pháp)",must_try:"Gan ngỗng áp chảo, Bít tết sốt tiêu",hours:"10h-22h",price_range:"200-500K",tags:["Âu"],description:"Phong cách cổ điển Pháp",image:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=280&fit=crop"},
-  {id:14,name:"Kobe Bistro (Michelin Selected)",address:"23C Tôn Đức Thắng, P. Bến Nghé",category:"Âu (Pháp)",must_try:"Beefsteak thượng hạng",hours:"10h-22h",price_range:"400-1500K",tags:["Âu"],description:"Sang trọng, yên tĩnh",image:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=280&fit=crop"},
-  {id:15,name:"Maison Mận Đỏ",address:"27J Trần Nhật Duật, P. Tân Định",category:"Âu - Á",must_try:"Cá tuyết hấp tương, Ba rọi quay",hours:"7h30-23h",price_range:"150-350K",tags:["Âu","Á"],description:"Kiến trúc Pháp cổ điển",image:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=280&fit=crop"},
-  {id:16,name:"Dim Tu Tac",address:"55 Đông Du, P. Bến Nghé",category:"Á (Trung Hoa)",must_try:"Há cảo tôm tươi, Vịt quay Bắc Kinh",hours:"10h-22h",price_range:"200-500K",tags:["Á"],description:"Sang trọng, phục vụ chuyên nghiệp",image:"https://images.unsplash.com/photo-1563245372-f21724a385a8?w=400&h=280&fit=crop"},
-  {id:17,name:"Pachi Pachi",address:"52 Mạc Đĩnh Chi, P. Đa Kao",category:"Á (Nhật Bản)",must_try:"Thịt nướng sốt Tare, Lẩu Shabu Shabu",hours:"10h30-23h",price_range:"250-550K",tags:["Á"],description:"Quán nhậu Nhật, ấm cúng",image:"https://images.unsplash.com/photo-1563245372-f21724a385a8?w=400&h=280&fit=crop"},
-  {id:18,name:"Gõ Thái Noodle",address:"150 Nguyễn Trãi, P. Bến Thành",category:"Á (Thái Lan)",must_try:"Pad Thai, Hủ tiếu Thái",hours:"10h-22h",price_range:"50-120K",tags:["Á"],description:"Decor đường phố Thái",image:"https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400&h=280&fit=crop"},
-  {id:19,name:"Ebisu",address:"35 Mạc Đĩnh Chi, P. Đa Kao",category:"Á (Nhật Bản)",must_try:"Mì Udon thủ công, Lẩu đầu cá hồi",hours:"11h-22h",price_range:"150-350K",tags:["Á"],description:"Nội thất gỗ, yên tĩnh",image:"https://images.unsplash.com/photo-1563245372-f21724a385a8?w=400&h=280&fit=crop"},
-  {id:20,name:"Cơm Niêu Thiên Lý",address:"16 Nguyễn Đình Chiểu, P. Đa Kao",category:"Đặc sản địa phương",must_try:"Cơm niêu cháy, Cá kho tộ",hours:"10h-21h30",price_range:"60-150K",tags:["Đặc sản"],description:"Cảm giác cơm nhà",image:"https://images.unsplash.com/photo-1606550340742-06c9b203a545?w=400&h=280&fit=crop"},
-  {id:21,name:"Quán Bụi Original",address:"19 Ngô Văn Năm, P. Bến Nghé",category:"Đặc sản địa phương",must_try:"Nem cua bể, Canh sấu sườn non",hours:"7h30-23h",price_range:"100-250K",tags:["Đặc sản"],description:"Decor gạch bông xưa",image:"https://images.unsplash.com/photo-1606550340742-06c9b203a545?w=400&h=280&fit=crop"},
-  {id:22,name:"Lẩu Cua Khôi",address:"18A Nguyễn Thị Minh Khai, P. Đa Kao",category:"Đặc sản hải sản",must_try:"Lẩu cua gạch, Cua rang me",hours:"15h-22h",price_range:"300-700K",tags:["Đặc sản"],description:"Chất lượng món ăn",image:"https://images.unsplash.com/photo-1518735243609-2f3cdecc7e6f?w=400&h=280&fit=crop"},
-  {id:23,name:"Phở Minh (Bib Gourmand)",address:"63 Pasteur, P. Bến Nghé",category:"Đặc sản (phở)",must_try:"Phở tái nạm vị Bắc",hours:"6h-10h",price_range:"50-100K",tags:["Đặc sản"],description:"Hẻm yên tĩnh, kiến trúc Sài Gòn xưa",image:"https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=400&h=280&fit=crop"},
-  {id:24,name:"Bún Chả Hoa Đông",address:"150/8B Nguyễn Trãi, P. Bến Thành",category:"Đặc sản (bắc)",must_try:"Bún chả nướng than hoa, Nem cua bể",hours:"6h-21h",price_range:"40-90K",tags:["Đặc sản"],description:"Quán truyền thống lâu đời",image:"https://images.unsplash.com/photo-1625615737816-3c60b977a9d9?w=400&h=280&fit=crop"},
-  {id:25,name:"Bún Bò Huế Cống Quỳnh",address:"262 Cống Quỳnh, P. Phạm Ngũ Lão",category:"Đặc sản (Huế)",must_try:"Bún bò gân chả cua, Giò heo hầm",hours:"6h-22h",price_range:"45-100K",tags:["Đặc sản"],description:"Bình dân, sạch sẽ",image:"https://images.unsplash.com/photo-1569718212165-3a82764d5f24?w=400&h=280&fit=crop"},
-  {id:26,name:"Cơm Xưa",address:"20 Trần Cao Vân, P. Đa Kao",category:"Đặc sản (trung)",must_try:"Gà nướng ống tre, Cá lóc nướng trui",hours:"10h-22h",price_range:"80-200K",tags:["Đặc sản"],description:"Decor tre nứa, hơi thở làng quê",image:"https://images.unsplash.com/photo-1606550340742-06c9b203a545?w=400&h=280&fit=crop"},
-  {id:27,name:"An Nam Quán",address:"59 Nguyễn Bỉnh Khiêm, P. Đa Kao",category:"Đặc sản (trung)",must_try:"Gà lên mâm, Chả cá thăng long",hours:"10h-22h30",price_range:"90-220K",tags:["Đặc sản"],description:"Mộc mạc kiểu miền Trung",image:"https://images.unsplash.com/photo-1606550340742-06c9b203a545?w=400&h=280&fit=crop"},
-  {id:28,name:"Bún Thịt Nướng Chị Tuyển",address:"175 Cô Giang, P. Cô Giang",category:"Đặc sản địa phương",must_try:"Bún thịt nướng, Chả giò giòn",hours:"7h30-20h",price_range:"35-70K",tags:["Đặc sản"],description:"Quán gia đình, nhộn nhịp",image:"https://images.unsplash.com/photo-1625615737816-3c60b977a9d9?w=400&h=280&fit=crop"},
-  {id:29,name:"Hủ Tiếu Mỹ Tho Thanh Xuân",address:"62 Tôn Thất Thiệp, P. Bến Nghé",category:"Đặc sản (Miền Tây)",must_try:"Hủ tiếu khô sốt đặc trưng",hours:"6h-14h",price_range:"40-80K",tags:["Đặc sản"],description:"Quán nhỏ lâu đời, gần chợ Bến Thành",image:"https://images.unsplash.com/photo-1575649514884-5b12e3c56d7c?w=400&h=280&fit=crop"},
-  {id:30,name:"Tân Hải Vân",address:"158 Nguyễn Trãi, P. Bến Thành",category:"Á (Trung Hoa)",must_try:"Bồ câu quay, Miến xào cua",hours:"6h-23h",price_range:"150-400K",tags:["Á"],description:"Mở cửa khuya, không gian hoài cổ",image:"https://images.unsplash.com/photo-1563245372-f21724a385a8?w=400&h=280&fit=crop"},
-  {id:31,name:"Cà phê De La Poste",address:"2 Công xã Paris, P. Bến Nghé",category:"Cafe",must_try:"Cà phê sữa đá",hours:"7h30-22h",price_range:"40-90K",tags:["Cafe"],description:"Kiến trúc Pháp cổ, view nhà thờ Đức Bà",image:"https://images.unsplash.com/photo-1585661801645-8f1c2bc7d9c7?w=400&h=280&fit=crop"},
-  {id:32,name:"Dabao Concept",address:"Lầu 3, 151 Đồng Khởi, P. Bến Nghé",category:"Cafe",must_try:"Trà bưởi hồng, Cà phê muối",hours:"9h30-21h",price_range:"50-110K",tags:["Cafe"],description:"Chung cư cũ, hoài cổ",image:"https://images.unsplash.com/photo-1585661801645-8f1c2bc7d9c7?w=400&h=280&fit=crop"},
-  {id:33,name:"Okkio Caffe",address:"122 Lê Lợi, P. Bến Thành",category:"Cafe",must_try:"Cà phê trứng, Cold Brew",hours:"7h30-22h",price_range:"45-100K",tags:["Cafe"],description:"Tone đỏ gạch, gần chợ Bến Thành",image:"https://images.unsplash.com/photo-1585661801645-8f1c2bc7d9c7?w=400&h=280&fit=crop"},
-  {id:34,name:"Sushi Rei",address:"Rooftop tầng 26, Saigon Centre, 65 Lê Lợi",category:"Nhật cao cấp",must_try:"Set sushi đặc biệt",hours:"17h30-22h",price_range:"500-1500K",tags:["Á","Cafe"],description:"View đẹp, nguyên liệu tươi",image:"https://images.unsplash.com/photo-1553621042-f6e147245754?w=400&h=280&fit=crop"},
-  {id:35,name:"Basta Hiro",address:"Lầu 3, Saigon Centre, 65 Lê Lợi",category:"Ý",must_try:"Pesto Seafood Pizza, Mì Ý tươi",hours:"10h30-22h",price_range:"200-450K",tags:["Âu"],description:"Sang trọng, decor đẹp",image:"https://images.unsplash.com/photo-1593560704563-f176a2eb61db?w=400&h=280&fit=crop"},
-  {id:36,name:"Mì Ý Double B",address:"TK40/24 Trần Hưng Đạo, Cầu Kho",category:"Ý bình dân",must_try:"Mì Ý sốt kem, sốt bò bằm",hours:"8h-22h",price_range:"40-90K",tags:["Âu"],description:"Giá bình dân, nổi tiếng ngon",image:"https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=400&h=280&fit=crop"}
+  {id:1,name:"Halal@Saigon",address:"31 Dong Du, Ben Nghe Ward",must_try:"Nasi Goreng Fried Rice, Goat Curry",hours:"10am-10pm",price_range:"80-150K",tags:["Halal"],description:"Cozy space opposite the mosque, attentive service.",image:"https://images.unsplash.com/photo-1633949275505-b6b4c79f1f0c?w=400&h=280&fit=crop"},
+  {id:2,name:"Kampung Melayu",address:"31 Nguyen An Ninh, Ben Thanh Ward",must_try:"Teh Tarik Pulled Tea, Chicken Rice",hours:"6am-11pm",price_range:"40-90K",tags:["Halal"],description:"Affordable, bustling, authentic Malaysian vibe.",image:"https://images.unsplash.com/photo-1585938389618-31a6b4c5c1f5?w=400&h=280&fit=crop"},
+  {id:3,name:"The Daun Halal",address:"48 Le Lai, Ben Thanh Ward",must_try:"Sambal Grilled Fish, Tom Yum Soup",hours:"10am-10:30pm",price_range:"100-200K",tags:["Halal"],description:"Modern, clean, overlooking 23/9 Park.",image:"https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=400&h=280&fit=crop"},
+  {id:4,name:"Taj Mahal",address:"241 Bui Vien, Pham Ngu Lao Ward",must_try:"Naan Bread, Chicken Masala Curry",hours:"10am-11pm",price_range:"150-300K",tags:["Halal"],description:"In the heart of backpacker area, vibrant Indian atmosphere.",image:"https://images.unsplash.com/photo-1585938389618-31a6b4c5c1f5?w=400&h=280&fit=crop"},
+  {id:5,name:"Pho Muslim",address:"Alley 505 Tran Hung Dao, Cau Kho Ward",must_try:"Halal Beef Pho, Cham-style Beef Curry, Bun Bo",hours:"6am-11:30am",price_range:"30-60K",tags:["Halal"],description:"Street stall in an alley, authentic local experience, cheap.",image:"https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=400&h=280&fit=crop"},
+  {id:6,name:"Tuệ Vegetarian Cuisine",address:"162 Tran Hung Dao, Nguyen Cu Trinh Ward",must_try:"Tuệ Hotpot, Thai-style Vermicelli Salad",hours:"9:30am-10pm",price_range:"80-180K",tags:["Vegetarian"],description:"Elegant and serene, suitable for hosting or family meals.",image:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=280&fit=crop"},
+  {id:7,name:"Man Tu Vegan",address:"201 Nguyen Thi Minh Khai, Nguyen Cu Trinh Ward",must_try:"Diverse Vegan Buffet",hours:"11am-9pm",price_range:"70-150K",tags:["Vegetarian"],description:"Rustic space, friendly atmosphere.",image:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=280&fit=crop"},
+  {id:8,name:"Shanti Veggie",address:"8 Luong Huu Khanh, Pham Ngu Lao Ward",must_try:"Crispy Rice with Veggie Dip, Lemongrass Tofu, Sour and Spicy Mushroom Hotpot",hours:"9:30am-9:30pm",price_range:"60-120K",tags:["Vegetarian"],description:"Small, quiet, decorated with lots of greenery.",image:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=280&fit=crop"},
+  {id:9,name:"Vi Que Kitchen (Bib Gourmand)",address:"110 Suong Nguyet Anh, Ben Thanh Ward",must_try:"Square Mushroom Spring Rolls, Vi Que Noodles",hours:"10am-10pm",price_range:"90-200K",tags:["Vegetarian"],description:"Modern, youthful, beautifully presented dishes for photos.",image:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=280&fit=crop"},
+  {id:10,name:"Hoa Khai Chay",address:"124 Nguyen Cu Trinh, Nguyen Cu Trinh Ward",must_try:"Mushroom Hotpot, Lemongrass Fried Spare Ribs",hours:"9:30am-10pm",price_range:"70-160K",tags:["Vegetarian"],description:"Spacious, fast service, suitable for large groups.",image:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=280&fit=crop"},
+  {id:11,name:"Pizza 4P's",address:"8/15 Le Thanh Ton, Ben Nghe Ward",must_try:"Burrata Cheese Pizza",hours:"10am-9pm",price_range:"200-400K",tags:["Western"],description:"Open kitchen, watch pizza made, beautiful decor, Japanese service.",image:"https://images.unsplash.com/photo-1593560704563-f176a2eb61db?w=400&h=280&fit=crop"},
+  {id:12,name:"Moo Beef Steak",address:"35 Ngo Duc Ke, Ben Nghe Ward",must_try:"Butter-grilled Beef Sirloin",hours:"10:30am-9:30pm",price_range:"250-600K",tags:["Western"],description:"View of Nguyen Hue walking street, elegant space, dim lighting for dates.",image:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=280&fit=crop"},
+  {id:13,name:"48 Bistro",address:"52 Le Thi Rieng, Ben Thanh Ward",must_try:"Pan-seared Foie Gras, Pepper Sauce Steak",hours:"10am-10pm",price_range:"200-500K",tags:["Western"],description:"Classic French style, quiet, reasonable price for quality.",image:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=280&fit=crop"},
+  {id:14,name:"Kobe Bistro (Michelin Selected)",address:"23C Ton Duc Thang, Ben Nghe Ward",must_try:"Premium Beefsteak dishes",hours:"10am-10pm",price_range:"400-1500K",tags:["Western"],description:"Luxurious, quiet, suitable for important parties.",image:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=280&fit=crop"},
+  {id:15,name:"Maison Man Do",address:"27J Tran Nhat Duat, Tan Dinh Ward",must_try:"Steamed Cod with Soy Sauce, Crispy Pork Belly, Pomelo Shrimp Salad",hours:"7:30am-11pm",price_range:"150-350K",tags:["Western","Asian"],description:"French classical architecture, nostalgic, garden view.",image:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=280&fit=crop"},
+  {id:16,name:"Dim Tu Tac",address:"55 Dong Du, Ben Nghe Ward",must_try:"Fresh Shrimp Dumplings, Peking Duck",hours:"10am-10pm",price_range:"200-500K",tags:["Asian"],description:"Luxurious, upscale Chinese restaurant, professional service.",image:"https://images.unsplash.com/photo-1563245372-f21724a385a8?w=400&h=280&fit=crop"},
+  {id:17,name:"Pachi Pachi",address:"52 Mac Dinh Chi, Da Kao Ward",must_try:"Tare Sauce Grilled Meat, Shabu Shabu Paper Hotpot, Sizzling Stone Rice",hours:"10:30am-11pm",price_range:"250-550K",tags:["Asian"],description:"Japanese izakaya style, cozy private, smoke-free grill.",image:"https://images.unsplash.com/photo-1563245372-f21724a385a8?w=400&h=280&fit=crop"},
+  {id:18,name:"Go Thai Noodle",address:"150 Nguyen Trai, Ben Thanh Ward",must_try:"Pad Thai, Thai Noodles",hours:"10am-10pm",price_range:"50-120K",tags:["Asian"],description:"Thai street decor, energetic, colorful, popular with youth.",image:"https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400&h=280&fit=crop"},
+  {id:19,name:"Ebisu",address:"35 Mac Dinh Chi, Da Kao Ward",must_try:"Handmade Udon Noodles, Cold Tofu, Salmon Head Hotpot",hours:"11am-10pm",price_range:"150-350K",tags:["Asian"],description:"Traditional Japanese wood interior, quiet, polite.",image:"https://images.unsplash.com/photo-1563245372-f21724a385a8?w=400&h=280&fit=crop"},
+  {id:20,name:"Com Nieu Thien Ly",address:"16 Nguyen Dinh Chieu, Da Kao Ward",must_try:"Claypot Rice with Crispy Crust, Braised Fish in Clay Pot",hours:"10am-9:30pm",price_range:"60-150K",tags:["Specialty"],description:"Family atmosphere, homestyle cooking.",image:"https://images.unsplash.com/photo-1606550340742-06c9b203a545?w=400&h=280&fit=crop"},
+  {id:21,name:"Quan Bui Original",address:"19 Ngo Van Nam, Ben Nghe Ward",must_try:"Crab Spring Rolls, Young Sour Soup with Pork Ribs",hours:"7:30am-11pm",price_range:"100-250K",tags:["Specialty"],description:"Classic street view, vintage tile decor, artistic and delicate.",image:"https://images.unsplash.com/photo-1606550340742-06c9b203a545?w=400&h=280&fit=crop"},
+  {id:22,name:"Lau Cua Khoi",address:"18A Nguyen Thi Minh Khai, Da Kao Ward",must_try:"Crab Roe Hotpot, Tamarind Crab",hours:"3pm-10pm",price_range:"300-700K",tags:["Specialty"],description:"Relaxed space, focus on food quality.",image:"https://images.unsplash.com/photo-1518735243609-2f3cdecc7e6f?w=400&h=280&fit=crop"},
+  {id:23,name:"Pho Minh (Bib Gourmand)",address:"63 Pasteur, Ben Nghe Ward",must_try:"Traditional Northern-style Pho with Well-done and Rare Beef",hours:"6am-10am",price_range:"50-100K",tags:["Specialty"],description:"In a quiet alley, preserving old Saigon architecture since 1950.",image:"https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=400&h=280&fit=crop"},
+  {id:24,name:"Bun Cha Hoa Dong",address:"150/8B Nguyen Trai, Ben Thanh Ward",must_try:"Charcoal-grilled Bun Cha, Crispy Crab Spring Rolls, Bun Nem",hours:"6am-9pm",price_range:"40-90K",tags:["Specialty"],description:"Long-standing traditional eatery, simple.",image:"https://images.unsplash.com/photo-1625615737816-3c60b977a9d9?w=400&h=280&fit=crop"},
+  {id:25,name:"Bun Bo Hue Cong Quynh",address:"262 Cong Quynh, Pham Ngu Lao Ward",must_try:"Beef Noodle Soup with Crab Cake, Braised Pork Leg, Banh Beo",hours:"6am-10pm",price_range:"45-100K",tags:["Specialty"],description:"Affordable, clean, fast service, airy.",image:"https://images.unsplash.com/photo-1569718212165-3a82764d5f24?w=400&h=280&fit=crop"},
+  {id:26,name:"Com Xua",address:"20 Tran Cao Van, Da Kao Ward",must_try:"Bamboo-tube Grilled Chicken, Pigeon Sticky Rice, Grilled Snakehead Fish",hours:"10am-10pm",price_range:"80-200K",tags:["Specialty"],description:"Decorated with bamboo, bringing a rural atmosphere.",image:"https://images.unsplash.com/photo-1606550340742-06c9b203a545?w=400&h=280&fit=crop"},
+  {id:27,name:"An Nam Quan",address:"59 Nguyen Binh Khiem, Da Kao Ward",must_try:"Whole Chicken Tray (4 dishes), Thang Long Fish Cake, Chicken Gizzard Stir-fried with Loofah",hours:"10am-10:30pm",price_range:"90-220K",tags:["Specialty"],description:"Spacious, rustic Central Vietnamese style.",image:"https://images.unsplash.com/photo-1606550340742-06c9b203a545?w=400&h=280&fit=crop"},
+  {id:28,name:"Bun Thit Nuong Chi Tuyen",address:"175 Co Giang, Co Giang Ward",must_try:"Grilled Pork Noodles, Crispy Spring Rolls",hours:"7:30am-8pm",price_range:"35-70K",tags:["Specialty"],description:"Family-run, bustling, authentic Saigon life.",image:"https://images.unsplash.com/photo-1625615737816-3c60b977a9d9?w=400&h=280&fit=crop"},
+  {id:29,name:"Hu Tieu My Tho Thanh Xuan",address:"62 Ton That Thiep, Ben Nghe Ward",must_try:"Dry Hu Tieu with Special Sauce, Banh Cong, Seafood Soup",hours:"6am-2pm",price_range:"40-80K",tags:["Specialty"],description:"Small, long-standing shop, nostalgic feel, near Ben Thanh Market.",image:"https://images.unsplash.com/photo-1575649514884-5b12e3c56d7c?w=400&h=280&fit=crop"},
+  {id:30,name:"Tan Hai Van",address:"158 Nguyen Trai, Ben Thanh Ward",must_try:"Roasted Pigeon, Morning Dim Sum, Crab Cellophane Noodles",hours:"6am-11pm",price_range:"150-400K",tags:["Asian"],description:"Retro space, two floors, open very late for night cravings.",image:"https://images.unsplash.com/photo-1563245372-f21724a385a8?w=400&h=280&fit=crop"},
+  {id:31,name:"Cafe De La Poste",address:"2 Cong Xa Paris, Ben Nghe Ward",must_try:"Traditional Vietnamese Iced Coffee, fruit juices",hours:"7:30am-10pm",price_range:"40-90K",tags:["Cafe"],description:"Classic French architecture, view of Notre Dame Cathedral.",image:"https://images.unsplash.com/photo-1585661801645-8f1c2bc7d9c7?w=400&h=280&fit=crop"},
+  {id:32,name:"Dabao Concept",address:"3rd Floor, 151 Dong Khoi, Ben Nghe Ward",must_try:"Pink Grapefruit Tea, Salted Coffee",hours:"9:30am-9pm",price_range:"50-110K",tags:["Cafe"],description:"Inside an old apartment building, nostalgic decor, quiet.",image:"https://images.unsplash.com/photo-1585661801645-8f1c2bc7d9c7?w=400&h=280&fit=crop"},
+  {id:33,name:"Okkio Caffe",address:"122 Le Loi, Ben Thanh Ward",must_try:"Egg Coffee, Cold Brew",hours:"7:30am-10pm",price_range:"45-100K",tags:["Cafe"],description:"Signature brick-red color, right near Ben Thanh Market, small but elegant.",image:"https://images.unsplash.com/photo-1585661801645-8f1c2bc7d9c7?w=400&h=280&fit=crop"},
+  {id:34,name:"Sushi Rei",address:"Rooftop, 26th floor, Saigon Centre, 65 Le Loi, Ben Nghe Ward",must_try:"Special Sushi Set",hours:"5:30pm-10pm",price_range:"500-1500K",tags:["Asian","Cafe"],description:"Beautiful view, luxurious, fresh premium ingredients.",image:"https://images.unsplash.com/photo-1553621042-f6e147245754?w=400&h=280&fit=crop"},
+  {id:35,name:"Basta Hiro",address:"3rd floor, Saigon Centre, 65 Le Loi",must_try:"Pesto Seafood Pizza, Fresh Pasta",hours:"10:30am-10pm",price_range:"200-450K",tags:["Western"],description:"Eye-catching food presentation, luxurious space.",image:"https://images.unsplash.com/photo-1593560704563-f176a2eb61db?w=400&h=280&fit=crop"},
+  {id:36,name:"Double B Pasta",address:"TK40/24 Tran Hung Dao, Cau Kho",must_try:"Cream Sauce Pasta, Ground Beef Sauce Pasta",hours:"8am-10pm",price_range:"40-90K",tags:["Western"],description:"Budget-friendly, famous for delicious dishes.",image:"https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=400&h=280&fit=crop"}
 ];
 
-
-// ===================== HÀM HIỂN THỊ DANH SÁCH, FILTER, DETAIL (giữ nguyên) =====================
 const FALLBACK_IMG = "https://picsum.photos/id/200/400/280";
 RESTAURANTS.forEach(r => { r.imgUrl = r.image || FALLBACK_IMG; });
 
+// ===================== HELPER FUNCTIONS (ENGLISH TAGS) =====================
 let currentFilter = "all";
 function tagClass(tag) {
-  const map = { 'Chay':'tag-chay','Halal':'tag-halal','Âu':'tag-au','Á':'tag-a','Đặc sản':'tag-dacsan','Cafe':'tag-cafe' };
+  const map = {
+    'Vegetarian': 'tag-vegetarian',
+    'Halal': 'tag-halal',
+    'Western': 'tag-western',
+    'Asian': 'tag-asian',
+    'Specialty': 'tag-specialty',
+    'Cafe': 'tag-cafe'
+  };
   return 'badge ' + (map[tag] || 'tag-default');
 }
 function tagIcon(tag) {
-  const icons = { 'Chay':'🥬','Halal':'🕌','Âu':'🍝','Á':'🥢','Đặc sản':'🏮','Cafe':'☕' };
+  const icons = {
+    'Vegetarian': '🥬',
+    'Halal': '🕌',
+    'Western': '🍝',
+    'Asian': '🥢',
+    'Specialty': '🏮',
+    'Cafe': '☕'
+  };
   return icons[tag] || '🏷️';
 }
 function renderTags(tags) {
-  return tags.map(t => `<span class="${tagClass(t)}"><i class="fa ${t==='Chay'?'fa-leaf':t==='Halal'?'fa-mosque':t==='Âu'?'fa-egg':t==='Á'?'fa-ramen':t==='Cafe'?'fa-mug-hot':'fa-tag'} mr-1"></i>${t}</span>`).join(' ');
+  return tags.map(t => `<span class="${tagClass(t)}"><i class="fa ${t==='Vegetarian'?'fa-leaf':t==='Halal'?'fa-mosque':t==='Western'?'fa-egg':t==='Asian'?'fa-ramen':t==='Cafe'?'fa-mug-hot':'fa-tag'} mr-1"></i>${t}</span>`).join(' ');
 }
 function renderCard(r) {
   return `<div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg cursor-pointer transition-all" onclick="showPage('detail',${r.id})">
@@ -237,7 +252,7 @@ function renderDetail(id) {
     <div class="flex flex-wrap gap-2 my-4">${renderTags(r.tags)}</div>
     <h1 class="text-3xl font-bold text-gray-800">${r.name}</h1>
     <p class="text-gray-500 mt-1"><i class="fa fa-map-marker-alt text-orange-500 mr-1"></i> ${r.address}</p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6"><div class="bg-amber-50 p-4 rounded-xl"><i class="fa fa-clock text-amber-600 mr-2"></i><span class="font-semibold">Giờ mở:</span> ${r.hours}</div><div class="bg-amber-50 p-4 rounded-xl"><i class="fa fa-tag text-amber-600 mr-2"></i><span class="font-semibold">Giá:</span> ${r.price_range} VND</div></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6"><div class="bg-amber-50 p-4 rounded-xl"><i class="fa fa-clock text-amber-600 mr-2"></i><span class="font-semibold">Hours:</span> ${r.hours}</div><div class="bg-amber-50 p-4 rounded-xl"><i class="fa fa-tag text-amber-600 mr-2"></i><span class="font-semibold">Price:</span> ${r.price_range} VND</div></div>
     <div class="bg-orange-50 p-5 rounded-2xl"><p class="font-bold text-orange-700">🍽️ Must try:</p><p class="text-gray-700">${r.must_try}</p></div>
     <p class="mt-5 text-gray-700">${r.description}</p>`;
 }
@@ -253,7 +268,7 @@ function showPage(page, id = null) {
 function initFilterBar() {
   const allTags = ["all", ...new Set(RESTAURANTS.flatMap(r => r.tags))];
   const bar = document.getElementById("filterBar");
-  bar.innerHTML = allTags.map(tag => `<button class="badge ${tag === "all" ? "bg-gray-200 text-gray-800" : tagClass(tag)} filter-btn px-4 py-1.5" data-tag="${tag}">${tag === "all" ? "📋 Tất cả" : `${tagIcon(tag)} ${tag}`}</button>`).join("");
+  bar.innerHTML = allTags.map(tag => `<button class="badge ${tag === "all" ? "bg-gray-200 text-gray-800" : tagClass(tag)} filter-btn px-4 py-1.5" data-tag="${tag}">${tag === "all" ? "📋 All" : `${tagIcon(tag)} ${tag}`}</button>`).join("");
   bar.addEventListener("click", e => { const btn = e.target.closest(".filter-btn"); if (btn) { currentFilter = btn.dataset.tag; renderList(); } });
 }
 function initHome() {
@@ -268,16 +283,16 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("nav-home").classList.add("active");
 });
 window.showPage = showPage;
-// ===================== GEMINI CHATBOT (dùng proxy cũ) =====================
-const GEMINI_FUNCTION_URL = "/.netlify/functions/gemini"; // đảm bảo đúng
-const lightContextGemini = RESTAURANTS.map(r => `${r.name} (${r.tags.join(',')}) ${r.price_range} - món: ${r.must_try.split(',')[0]} - ${r.address}`).join('\n');
-const systemPromptGemini = `Bạn là trợ lý ẩm thực Quận 1, TP.HCM. Dựa vào danh sách quán sau (tên - tag - giá - món - địa chỉ):\n${lightContextGemini}\nHãy trả lời câu hỏi bằng tiếng Việt, thân thiện, gợi ý cụ thể. Nếu câu hỏi ngoài phạm vi, hãy nói 'Tôi chỉ biết về quán ăn Quận 1.'`;
+
+// ===================== GEMINI CHATBOT =====================
+const GEMINI_FUNCTION_URL = "/.netlify/functions/gemini";
+const lightContextGemini = RESTAURANTS.map(r => `${r.name} (${r.tags.join(',')}) ${r.price_range} - dish: ${r.must_try.split(',')[0]} - ${r.address}`).join('\n');
+const systemPromptGemini = `You are a professional food assistant for District 1, Ho Chi Minh City. Based on the following restaurant list (name - tag - price - dish - address):\n${lightContextGemini}\nAnswer questions in English, friendly, and provide specific suggestions. If the question is out of scope, say 'I only know about District 1 restaurants.'`;
 
 let geminiHistory = [
   { role: "user", parts: [{ text: systemPromptGemini }] },
-  { role: "model", parts: [{ text: "OK, tôi sẵn sàng tư vấn ẩm thực Quận 1 cho bạn." }] }
+  { role: "model", parts: [{ text: "OK, I'm ready to advise on District 1 food for you." }] }
 ];
-
 async function askGemini(question) {
   let contents = [...geminiHistory, { role: "user", parts: [{ text: question }] }];
   try {
@@ -287,14 +302,13 @@ async function askGemini(question) {
       body: JSON.stringify({ contents, generationConfig: { temperature: 0.6, maxOutputTokens: 4000 } })
     });
     const data = await res.json();
-    if (data.error) return `⚠️ Lỗi Gemini: ${data.error.message || JSON.stringify(data.error)}`;
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Xin lỗi, chưa hiểu câu hỏi.";
+    if (data.error) return `⚠️ Gemini error: ${data.error.message || JSON.stringify(data.error)}`;
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I didn't understand the question.";
     geminiHistory.push({ role: "user", parts: [{ text: question }] }, { role: "model", parts: [{ text: reply }] });
     if (geminiHistory.length > 12) geminiHistory = [geminiHistory[0], geminiHistory[1], ...geminiHistory.slice(-8)];
     return reply;
-  } catch(e) { return "🔌 Lỗi kết nối Gemini."; }
+  } catch(e) { return "🔌 Gemini connection error."; }
 }
-
 // Gemini UI
 const chatToggleGemini = document.getElementById("chatToggleGemini");
 const chatWindowGemini = document.getElementById("chatWindowGemini");
@@ -302,20 +316,12 @@ const closeChatGemini = document.getElementById("closeChatGemini");
 const chatMessagesGemini = document.getElementById("chatMessagesGemini");
 const chatInputGemini = document.getElementById("chatInputGemini");
 const sendBtnGemini = document.getElementById("sendChatGemini");
-
 chatToggleGemini.onclick = () => chatWindowGemini.classList.toggle("hidden");
 closeChatGemini.onclick = () => chatWindowGemini.classList.add("hidden");
-
 function addMessageGemini(text, isUser) {
-  const d = document.createElement("div");
-  d.className = `message ${isUser ? "user" : "bot"}`;
-  d.innerHTML = text.replace(/\n/g, "<br>");
-  chatMessagesGemini.appendChild(d);
-  chatMessagesGemini.scrollTop = chatMessagesGemini.scrollHeight;
+  const d = document.createElement("div"); d.className = `message ${isUser ? "user" : "bot"}`; d.innerHTML = text.replace(/\n/g, "<br>");
+  chatMessagesGemini.appendChild(d); chatMessagesGemini.scrollTop = chatMessagesGemini.scrollHeight;
 }
-function showTypingGemini() { /* tương tự */ }
-function hideTypingGemini() { /* tương tự */ }
-
 let processingGemini = false;
 async function handleSendGemini() {
   if (processingGemini) return;
@@ -324,7 +330,8 @@ async function handleSendGemini() {
   addMessageGemini(q, true);
   chatInputGemini.value = "";
   processingGemini = true;
-  let typing = document.createElement("div"); typing.className = "typing"; typing.id = "typingGemini"; typing.innerText = "Đang suy nghĩ..."; chatMessagesGemini.appendChild(typing);
+  let typing = document.createElement("div"); typing.className = "typing"; typing.id = "typingGemini"; typing.innerText = "Thinking...";
+  chatMessagesGemini.appendChild(typing);
   chatMessagesGemini.scrollTop = chatMessagesGemini.scrollHeight;
   const reply = await askGemini(q);
   document.getElementById("typingGemini")?.remove();
@@ -334,13 +341,12 @@ async function handleSendGemini() {
 sendBtnGemini.onclick = handleSendGemini;
 chatInputGemini.addEventListener("keypress", e => { if (e.key === "Enter") handleSendGemini(); });
 
-// ===================== GROQ CHATBOT (thêm mới) =====================
+// ===================== GROQ CHATBOT =====================
 const GROQ_FUNCTION_URL = "/.netlify/functions/groq";
-const lightContextGroq = RESTAURANTS.map(r => `${r.name} (${r.tags.join(',')}) ${r.price_range} - món: ${r.must_try.split(',')[0]} - ${r.address}`).join('\n');
-const systemPromptGroq = `Bạn là trợ lý ẩm thực Quận 1, TP.HCM. Dựa vào danh sách quán sau (tên - tag - giá - món - địa chỉ):\n${lightContextGroq}\nHãy trả lời câu hỏi bằng tiếng Việt, thân thiện, gợi ý cụ thể. Nếu câu hỏi ngoài phạm vi, hãy nói 'Tôi chỉ biết về quán ăn Quận 1.'`;
+const lightContextGroq = RESTAURANTS.map(r => `${r.name} (${r.tags.join(',')}) ${r.price_range} - dish: ${r.must_try.split(',')[0]} - ${r.address}`).join('\n');
+const systemPromptGroq = `You are a professional food assistant for District 1, Ho Chi Minh City. Based on the following restaurant list (name - tag - price - dish - address):\n${lightContextGroq}\nAnswer questions in English, friendly, and provide specific suggestions. If the question is out of scope, say 'I only know about District 1 restaurants.'`;
 
-let groqHistory = []; // sẽ lưu theo role user/assistant
-
+let groqHistory = [];
 async function askGroq(question) {
   const messages = [
     { role: "system", content: systemPromptGroq },
@@ -359,18 +365,16 @@ async function askGroq(question) {
       })
     });
     const data = await res.json();
-    if (data.error) return `⚠️ Lỗi Groq: ${data.error.message}`;
-    const reply = data.choices[0]?.message?.content || "Xin lỗi, chưa hiểu câu hỏi.";
-    groqHistory.push({ role: "user", content: question });
-    groqHistory.push({ role: "assistant", content: reply });
+    if (data.error) return `⚠️ Groq error: ${data.error.message}`;
+    const reply = data.choices?.[0]?.message?.content || "Sorry, I didn't understand.";
+    groqHistory.push({ role: "user", content: question }, { role: "assistant", content: reply });
     if (groqHistory.length > 20) groqHistory = groqHistory.slice(-20);
     return reply;
   } catch(e) {
     console.error(e);
-    return "🔌 Lỗi kết nối Groq.";
+    return "🔌 Groq connection error.";
   }
 }
-
 // Groq UI
 const chatToggleGroq = document.getElementById("chatToggleGroq");
 const chatWindowGroq = document.getElementById("chatWindowGroq");
@@ -378,18 +382,12 @@ const closeChatGroq = document.getElementById("closeChatGroq");
 const chatMessagesGroq = document.getElementById("chatMessagesGroq");
 const chatInputGroq = document.getElementById("chatInputGroq");
 const sendBtnGroq = document.getElementById("sendChatGroq");
-
 chatToggleGroq.onclick = () => chatWindowGroq.classList.toggle("hidden");
 closeChatGroq.onclick = () => chatWindowGroq.classList.add("hidden");
-
 function addMessageGroq(text, isUser) {
-  const d = document.createElement("div");
-  d.className = `message ${isUser ? "user" : "bot"}`;
-  d.innerHTML = text.replace(/\n/g, "<br>");
-  chatMessagesGroq.appendChild(d);
-  chatMessagesGroq.scrollTop = chatMessagesGroq.scrollHeight;
+  const d = document.createElement("div"); d.className = `message ${isUser ? "user" : "bot"}`; d.innerHTML = text.replace(/\n/g, "<br>");
+  chatMessagesGroq.appendChild(d); chatMessagesGroq.scrollTop = chatMessagesGroq.scrollHeight;
 }
-
 let processingGroq = false;
 async function handleSendGroq() {
   if (processingGroq) return;
@@ -398,7 +396,8 @@ async function handleSendGroq() {
   addMessageGroq(q, true);
   chatInputGroq.value = "";
   processingGroq = true;
-  let typing = document.createElement("div"); typing.className = "typing"; typing.id = "typingGroq"; typing.innerText = "Đang suy nghĩ..."; chatMessagesGroq.appendChild(typing);
+  let typing = document.createElement("div"); typing.className = "typing"; typing.id = "typingGroq"; typing.innerText = "Thinking...";
+  chatMessagesGroq.appendChild(typing);
   chatMessagesGroq.scrollTop = chatMessagesGroq.scrollHeight;
   const reply = await askGroq(q);
   document.getElementById("typingGroq")?.remove();
