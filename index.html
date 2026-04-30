@@ -87,14 +87,18 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
 
 <!-- Home Page -->
 <div id="page-home" class="page active">
-  <div class="hero-pattern text-white py-20 px-5 text-center relative">
-    <div class="relative z-10 max-w-4xl mx-auto">
-      <p class="text-sm font-semibold tracking-widest uppercase mb-3 text-amber-200">✨ The Essence of Saigon Cuisine ✨</p>
-      <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-4">District 1 Foodie Corner</h1>
-      <p class="text-lg md:text-xl text-white/90 max-w-xl mx-auto mb-8">Get lost in the taste of Saigon: vibrant street food, hidden alleys, and elegant feasts – all waiting right here.</p>
+  <!-- HERO SECTION WITH BACKGROUND IMAGE -->
+  <div class="relative h-[500px] md:h-[650px] bg-cover bg-center flex items-center justify-center" 
+       style="background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('images/background.jpg');">
+    <div class="relative z-10 text-center text-white max-w-3xl px-5">
+      <p class="text-sm font-semibold tracking-widest uppercase mb-3 text-amber-200 drop-shadow-md">✨ The Essence of Saigon Cuisine ✨</p>
+      <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-4 drop-shadow-lg">District 1 Foodie Corner</h1>
+      <p class="text-lg md:text-xl text-white/90 max-w-xl mx-auto mb-8 drop-shadow">Get lost in the taste of Saigon: vibrant street food, hidden alleys, and elegant feasts – all waiting right here.</p>
       <button onclick="showPage('list')" class="bg-white text-orange-600 font-bold px-9 py-3 rounded-full shadow-lg hover:shadow-xl transition-all text-base"><i class="fa fa-compass mr-2"></i>Explore Now</button>
     </div>
   </div>
+
+  <!-- MUST-TRY DISHES (unchanged but retains dynamic grid) -->
   <div class="max-w-7xl mx-auto px-5 py-16">
     <div class="flex items-center justify-between mb-8 flex-wrap gap-3">
       <div><h2 class="text-3xl font-bold text-gray-800">🍽️ <span class="border-b-4 border-orange-400 pb-1">Must-try</span> Dishes</h2><p class="text-gray-500 mt-1">Recommendations from the most famous restaurants in District 1</p></div>
@@ -102,12 +106,16 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
     </div>
     <div id="mustTryGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"></div>
   </div>
+
+  <!-- QUOTE SECTION -->
   <div class="bg-gradient-to-r from-amber-50 to-orange-50 py-12 my-6">
     <div class="max-w-5xl mx-auto px-5 text-center">
       <i class="fa fa-quote-left text-4xl text-orange-300 mb-3"></i>
       <p class="text-lg italic text-gray-700">"Saigon is not just about pho – it's a whole universe of culinary wonders hidden in every small alley."</p>
     </div>
   </div>
+
+  <!-- POPULAR RESTAURANTS (dynamic grid) -->
   <div class="max-w-7xl mx-auto px-5 py-12">
     <h2 class="text-2xl font-bold text-gray-800 mb-6"><i class="fa fa-fire text-orange-500 mr-2"></i> Popular Restaurants</h2>
     <div id="featuredGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7"></div>
@@ -169,7 +177,7 @@ const RESTAURANTS = [
   {id:6,name:"Tuệ Vegetarian Cuisine",address:"162 Tran Hung Dao, Nguyen Cu Trinh Ward",must_try:"Tuệ Hotpot, Thai-style Vermicelli Salad",hours:"9:30am-10pm",price_range:"80-180K",tags:["Vegetarian"],description:"Elegant and serene, suitable for hosting or family meals.",image:"images/chay tuệ.png"},
   {id:7,name:"Man Tu Vegan",address:"201 Nguyen Thi Minh Khai, Nguyen Cu Trinh Ward",must_try:"Diverse Vegan Buffet",hours:"11am-9pm",price_range:"70-150K",tags:["Vegetarian"],description:"Rustic space, friendly atmosphere.",image:"images/mãn tự vegan.png"},
   {id:8,name:"Shanti Veggie",address:"8 Luong Huu Khanh, Pham Ngu Lao Ward",must_try:"Crispy Rice with Veggie Dip, Lemongrass Tofu, Sour and Spicy Mushroom Hotpot",hours:"9:30am-9:30pm",price_range:"60-120K",tags:["Vegetarian"],description:"Small, quiet, decorated with lots of greenery.",image:"images/shanti veggie.png"},
-  {id:9,name:"Vi Que Kitchen (Bib Gourmand)",address:"110 Suong Nguyet Anh, Ben Thanh Ward",must_try:"Square Mushroom Spring Rolls, Vi Que Noodles",hours:"10am-10pm",price_range:"90-200K",tags:["Vegetarian"],description:"Modern, youthful, beautifully presented dishes for photos.",image:"images/vi que kitchen.png"},
+  {id:9,name:"Vi Que Kitchen (Bib Gourmand)",address:"110 Suong Nguyet Anh, Ben Thanh Ward",must_try:"Square Mushroom Spring Rolls, Vi Que Noodles",hours:"10am-10pm",price_range:"90-200K",tags:["Vegetarian"],description:"Modern, youthful, beautifully presented dishes for photos.",image:"images/vị quê kitchen.png"},
   {id:10,name:"Hoa Khai Chay",address:"124 Nguyen Cu Trinh, Nguyen Cu Trinh Ward",must_try:"Mushroom Hotpot, Lemongrass Fried Spare Ribs",hours:"9:30am-10pm",price_range:"70-160K",tags:["Vegetarian"],description:"Spacious, fast service, suitable for large groups.",image:"images/hoa khai chay.png"},
   {id:11,name:"Pizza 4P's",address:"8/15 Le Thanh Ton, Ben Nghe Ward",must_try:"Burrata Cheese Pizza",hours:"10am-9pm",price_range:"200-400K",tags:["Western"],description:"Open kitchen, watch pizza made, beautiful decor, Japanese service.",image:"images/pizza 4p.png"},
   {id:12,name:"Moo Beef Steak",address:"109 Ly Tu Trong, Ben Nghe Ward",must_try:"Butter-grilled Beef Sirloin",hours:"10:30am-9:30pm",price_range:"250-600K",tags:["Western"],description:"View of Nguyen Hue walking street, elegant space, dim lighting for dates.",image:"images/moo beef steak.png"},
@@ -181,7 +189,7 @@ const RESTAURANTS = [
   {id:18,name:"Go Thai Noodle",address:"150 Nguyen Trai, Ben Thanh Ward",must_try:"Pad Thai, Thai Noodles",hours:"10am-10pm",price_range:"50-120K",tags:["Asian"],description:"Thai street decor, energetic, colorful, popular with youth.",image:"images/gõ thai noodle.png"},
   {id:19,name:"Ebisu",address:"35 Mac Dinh Chi, Da Kao Ward",must_try:"Handmade Udon Noodles, Cold Tofu, Salmon Head Hotpot",hours:"11am-10pm",price_range:"150-350K",tags:["Asian"],description:"Traditional Japanese wood interior, quiet, polite.",image:"images/ebisu.png"},
   {id:20,name:"Com Nieu Thien Ly",address:"16 Nguyen Dinh Chieu, Da Kao Ward",must_try:"Claypot Rice with Crispy Crust, Braised Fish in Clay Pot",hours:"10am-9:30pm",price_range:"60-150K",tags:["Specialty"],description:"Family atmosphere, homestyle cooking.",image:"images/com nieu thien ly.png"},
-  {id:21,name:"Quan Bui Original",address:"19 Ngo Van Nam, Ben Nghe Ward",must_try:"Crab Spring Rolls, Young Sour Soup with Pork Ribs",hours:"7:30am-11pm",price_range:"100-250K",tags:["Specialty"],description:"Classic street view, vintage tile decor, artistic and delicate.",image:"images/quan bụi.png"},
+  {id:21,name:"Quan Bui Original",address:"19 Ngo Van Nam, Ben Nghe Ward",must_try:"Crab Spring Rolls, Young Sour Soup with Pork Ribs",hours:"7:30am-11pm",price_range:"100-250K",tags:["Specialty"],description:"Classic street view, vintage tile decor, artistic and delicate.",image:"images/quán bụi.png"},
   {id:22,name:"Lau Cua Khoi",address:"18A Nguyen Thi Minh Khai, Da Kao Ward",must_try:"Crab Roe Hotpot, Tamarind Crab",hours:"3pm-10pm",price_range:"300-700K",tags:["Specialty"],description:"Relaxed space, focus on food quality.",image:"images/lẩu cua khôi.png"},
   {id:23,name:"Pho Minh (Bib Gourmand)",address:"63 Pasteur, Ben Nghe Ward",must_try:"Traditional Northern-style Pho with Well-done and Rare Beef",hours:"6am-10am",price_range:"50-100K",tags:["Specialty"],description:"In a quiet alley, preserving old Saigon architecture since 1950.",image:"images/phở minh.png"},
   {id:24,name:"Bun Cha Hoa Dong",address:"28/6A Ton That Tung, Ben Thanh Ward",must_try:"Charcoal-grilled Bun Cha, Crispy Crab Spring Rolls, Bun Nem",hours:"6am-9pm",price_range:"40-90K",tags:["Specialty"],description:"Long-standing traditional eatery, simple.",image:"images/bún chả hoa đông.png"},
@@ -193,20 +201,20 @@ const RESTAURANTS = [
   {id:30,name:"Tan Hai Van",address:"158 Nguyen Trai, Ben Thanh Ward",must_try:"Roasted Pigeon, Morning Dim Sum, Crab Cellophane Noodles",hours:"6am-11pm",price_range:"150-400K",tags:["Asian"],description:"Retro space, two floors, open very late for night cravings.",image:"images/tan hai van.png"},
   {id:31,name:"Cafe De La Poste",address:"2 Cong Xa Paris, Ben Nghe Ward",must_try:"Traditional Vietnamese Iced Coffee, fruit juices",hours:"7:30am-10pm",price_range:"40-90K",tags:["Cafe","Dessert"],description:"Classic French architecture, view of Notre Dame Cathedral.",image:"images/cà phê de la poste.png"},
   {id:32,name:"Dabao Concept",address:"3rd Floor, 151 Dong Khoi, Ben Nghe Ward",must_try:"Pink Grapefruit Tea, Salted Coffee",hours:"9:30am-9pm",price_range:"50-110K",tags:["Cafe","Dessert"],description:"Inside an old apartment building, nostalgic decor, quiet.",image:"images/dabao concept.png"},
-  {id:33,name:"Okkio Caffe",address:"122 Le Loi, Ben Thanh Ward",must_try:"Egg Coffee, Cold Brew",hours:"7:30am-10pm",price_range:"45-100K",tags:["Cafe","Dessert"],description:"Signature brick-red color, right near Ben Thanh Market, small but elegant.",image:"images/okkio caffe.png"},
+  {id:33,name:"Okkio Caffe",address:"122 Le Loi, Ben Thanh Ward",must_try:"Egg Coffee, Cold Brew",hours:"7:30am-10pm",price_range:"45-100K",tags:["Cafe","Dessert"],description:"Signature brick-red color, right near Ben Thanh Market, small but elegant.",image:"images/okkio cafe.png"},
   {id:34,name:"Sushi Rei",address:"Rooftop, 26th floor, Saigon Centre, 65 Le Loi, Ben Nghe Ward",must_try:"Special Sushi Set",hours:"5:30pm-10pm",price_range:"500-1500K",tags:["Asian","Cafe"],description:"Beautiful view, luxurious, fresh premium ingredients.",image:"images/sushi rei.png"},
   {id:35,name:"Basta Hiro",address:"3rd floor, Saigon Centre, 65 Le Loi",must_try:"Pesto Seafood Pizza, Fresh Pasta",hours:"10:30am-10pm",price_range:"200-450K",tags:["Western","Asian"],description:"Eye-catching food presentation, luxurious space.",image:"images/basta hiro.png"},
-  {id:36,name:"Double B Pasta",address:"TK40/24 Tran Hung Dao, Cau Kho",must_try:"Cream Sauce Pasta, Ground Beef Sauce Pasta",hours:"8am-10pm",price_range:"40-90K",tags:["Western"],description:"Budget-friendly, famous for delicious dishes.",image:"images/mỳ ý double b.png"},
-  {id:37,name:"Vee Ayy Food",address:"345/84 Tran Hung Dao, Cau Kho",must_try:"Garlic Butter Bread, Spicy Chicken Udon",hours:"10am-10:30pm",price_range:"50-120K",tags:["Asian"],description:"Korean-style casual dining, popular for quick bites.",image:"images/vee ayy food.png"},
+  {id:36,name:"Double B Pasta",address:"TK40/24 Tran Hung Dao, Cau Kho",must_try:"Cream Sauce Pasta, Ground Beef Sauce Pasta",hours:"8am-10pm",price_range:"40-90K",tags:["Western"],description:"Budget-friendly, famous for delicious dishes.",image:"images/mì ý double b.png"},
+  {id:37,name:"Vee Ayy Food",address:"345/84 Tran Hung Dao, Cau Kho",must_try:"Garlic Butter Bread, Spicy Chicken Udon",hours:"10am-10:30pm",price_range:"50-120K",tags:["Asian"],description:"Korean-style casual dining, popular for quick bites.",image:"images/vee avy food.png"},
   {id:38,name:"Miya Sushi & BBQ",address:"150/26 Nguyen Trai",must_try:"Fresh Sashimi, Eel Roll, Japanese-style Grilled Meat",hours:"11am-2pm, 5pm-10pm",price_range:"200-500K",tags:["Asian"],description:"Cozy modern decor, suitable for groups and families.",image:"images/miya sushi & bbq.png"},
   {id:39,name:"Al Sham Saigon",address:"314 Vo Van Kiet, Cau Ong Lanh Ward",must_try:"Hummus, Falafel, Tabbouleh, Mixed Grill, Mansaf",hours:"10am-11pm",price_range:"150-300K",tags:["Halal"],description:"Authentic Syrian flavors, Arabic decor, great for cultural explorers.",image:"images/al sham saigon.png"},
-  {id:40,name:"Musa Karim Restaurant",address:"47 Nguyen An Ninh, Ben Thanh Ward",must_try:"Chicken Bread, Mie Mamak, Chicken Curry, Soto Ayam",hours:"6:30am-11pm",price_range:"40-120K",tags:["Halal"],description:"Serves Muslim community and Malaysian/Indonesian tourists, near major mosques.",image:"images/musa karim.png"},
+  {id:40,name:"Musa Karim Restaurant",address:"47 Nguyen An Ninh, Ben Thanh Ward",must_try:"Chicken Bread, Mie Mamak, Chicken Curry, Soto Ayam",hours:"6:30am-11pm",price_range:"40-120K",tags:["Halal"],description:"Serves Muslim community and Malaysian/Indonesian tourists, near major mosques.",image:"images/musha karim.png"},
   {id:41,name:"Kedai Muslim Halal Al-Amin",address:"31 Nguyen An Ninh, Ben Thanh Ward",must_try:"Fried Noodles, Fried Rice, Kuey Teow",hours:"7:30am-9pm",price_range:"30-80K",tags:["Halal"],description:"Affordable, casual stop for FIT Muslim travelers.",image:"images/halal amin.png"},
   {id:42,name:"El Gaucho",address:"74/1 Hai Ba Trung, Ben Nghe Ward",must_try:"Beefsteak, Wine, Salad, Burger",hours:"11am-11pm",price_range:"500-2000K",tags:["Western"],description:"High-end, industrial chic, international service, prime locations.",image:"images/el gaucho.png"},
   {id:43,name:"The Log Restaurant",address:"Rooftop, Gem Center, 8 Nguyen Binh Khiem, Da Kao",must_try:"Broccoli Cream Scallop Soup, Pan-fried Lobster with Truffle Mushroom",hours:"6pm-11pm",price_range:"400-1200K",tags:["Asian","Western"],description:"Unique wooden space on Gem Center rooftop, very quiet and secluded.",image:"images/the log restaurant.png"},
-  {id:44,name:"Twilight Sky Bar Saigon",address:"180 Ly Tu Trong, Ben Thanh Ward",must_try:"International Wine Selection",hours:"5:30pm-12am",price_range:"300-1000K",tags:["Western","Cafe"],description:"Million-dollar view of District 1 and Saigon River, spacious outdoor area.",image:"images/twilight sky bar saigon.png"},
+  {id:44,name:"Twilight Sky Bar Saigon",address:"180 Ly Tu Trong, Ben Thanh Ward",must_try:"International Wine Selection",hours:"5:30pm-12am",price_range:"300-1000K",tags:["Western","Cafe"],description:"Million-dollar view of District 1 and Saigon River, spacious outdoor area.",image:"images/twilight.jpg"},
   {id:45,name:"Bep Nha Luc Tinh",address:"37 Nam Ky Khoi Nghia, Nguyen Thai Binh Ward",must_try:"Banh Xeo, Fermented Fish Hotpot, Crispy Rice with Veggie Dip",hours:"10am-10pm",price_range:"80-200K",tags:["Specialty"],description:"Old Southern Vietnam decor, lotus pond inside, very cultural.",image:"images/bếp nhà lục tỉnh.png"},
-  {id:46,name:"Quan Ngon 138 - Vietnamese Cuisine",address:"138 Nam Ky Khoi Nghia, Ben Nghe Ward",must_try:"Pho, Spring Rolls, West Lake Shrimp Cake",hours:"7:30am-10pm",price_range:"80-250K",tags:["Specialty"],description:"Old house architecture, quintessential flavors of three regions, great for int'l guests.",image:"images/quan ngon 138.png"},
+  {id:46,name:"Quan Ngon 138 - Vietnamese Cuisine",address:"138 Nam Ky Khoi Nghia, Ben Nghe Ward",must_try:"Pho, Spring Rolls, West Lake Shrimp Cake",hours:"7:30am-10pm",price_range:"80-250K",tags:["Specialty"],description:"Old house architecture, quintessential flavors of three regions, great for int'l guests.",image:"images/quán ngon 138.png"},
   {id:47,name:"Chinatown Saigon Cafe",address:"65 Nguyen Trai, Ward 2",must_try:"Char Siu Sandwich, Hong Kong Milk Tea",hours:"7:30am-10pm",price_range:"50-150K",tags:["Asian","Cafe"],description:"90s Hong Kong style decor, perfect for check-in photos.",image:"images/chinatown.png"},
   {id:48,name:"Pho Quynh",address:"323 Pham Ngu Lao, Pham Ngu Lao Ward",must_try:"Beef Pho (rare/well-done), Chicken Pho",hours:"24/7 (or very late)",price_range:"45-90K",tags:["Specialty"],description:"Rich broth, tender beef, chewy noodles, served with fresh herbs.",image:"images/phở quỳnh.png"},
   {id:49,name:"Com Bac Ngo 5",address:"5/5E Le Thi Rieng, Pham Ngu Lao Ward",must_try:"Braised Pork with Eggs, Salted Eggplant, Braised Fish, Stir-fried Frog",hours:"10am-9pm",price_range:"40-100K",tags:["Specialty"],description:"Homestyle Northern Vietnamese flavors, simple and familiar.",image:"images/cơm bắc ngõ 5.png"},
