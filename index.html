@@ -58,7 +58,7 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
   .chat-header-gemini { background: #264653; color: white; padding: 14px 18px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
   
   /* Groq widget (left) */
-  .chat-widget-groq { position: fixed; bottom: 24px; left: 24px; z-index: 9999; }
+  .chat-widget-groq { position: fixed; bottom: 24px; right: 24px; z-index: 9999; }
   .chat-toggle-groq { background: #f97316; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: 0.2s; }
   .chat-toggle-groq:hover { background: #ea580c; transform: scale(1.05); }
   .chat-window-groq { position: fixed; bottom: 96px; left: 24px; width: 380px; max-width: calc(100vw - 48px); height: 520px; background: white; border-radius: 28px; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.25); display: flex; flex-direction: column; overflow: hidden; transition: 0.2s; z-index: 10000; }
@@ -147,14 +147,7 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
 </div>
 
 <!-- Gemini Chatbot (right) -->
-<div class="chat-widget-gemini">
-  <div class="chat-toggle-gemini" id="chatToggleGemini"><i class="fa-regular fa-comment-dots text-2xl text-white"></i></div>
-  <div id="chatWindowGemini" class="chat-window-gemini hidden">
-    <div class="chat-header-gemini"><span><i class="fa-regular fa-message"></i> Gemini Assistant</span><i class="fa-solid fa-times cursor-pointer" id="closeChatGemini"></i></div>
-    <div id="chatMessagesGemini" class="chat-messages"><div class="message bot">👋 Hi! I'm your District 1 food assistant (Gemini). Ask me about restaurants, dishes, prices...</div></div>
-    <div class="chat-input-area"><input type="text" id="chatInputGemini" placeholder="e.g., vegetarian restaurant, halal food, pizza..."><button id="sendChatGemini">Send</button></div>
-  </div>
-</div>
+
 
 <!-- Groq Chatbot (left) -->
 <div class="chat-widget-groq">
