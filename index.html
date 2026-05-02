@@ -58,7 +58,7 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
   .chat-header-gemini { background: #264653; color: white; padding: 14px 18px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
   
   /* Groq widget (left) */
-  .chat-widget-groq { position: fixed; bottom: 24px; right: 24px; z-index: 9999; }
+  .chat-widget-groq { position: fixed; bottom: 24px; left: 24px; z-index: 9999; }
   .chat-toggle-groq { background: #f97316; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: 0.2s; }
   .chat-toggle-groq:hover { background: #ea580c; transform: scale(1.05); }
   .chat-window-groq { position: fixed; bottom: 96px; left: 24px; width: 380px; max-width: calc(100vw - 48px); height: 520px; background: white; border-radius: 28px; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.25); display: flex; flex-direction: column; overflow: hidden; transition: 0.2s; z-index: 10000; }
@@ -326,6 +326,7 @@ async function askGemini(question) {
     return reply;
   } catch(e) { return "🔌 Gemini connection error."; }
 }
+/*
 // Gemini UI
 const chatToggleGemini = document.getElementById("chatToggleGemini");
 const chatWindowGemini = document.getElementById("chatWindowGemini");
@@ -357,7 +358,7 @@ async function handleSendGemini() {
 }
 sendBtnGemini.onclick = handleSendGemini;
 chatInputGemini.addEventListener("keypress", e => { if (e.key === "Enter") handleSendGemini(); });
-
+*/
 // ===================== GROQ CHATBOT =====================
 const GROQ_FUNCTION_URL = "/.netlify/functions/groq";
 const lightContextGroq = RESTAURANTS.map(r => `${r.name} (${r.tags.join(',')}) ${r.price_range} - dish: ${r.must_try.split(',')[0]} - ${r.address}`).join('\n');
