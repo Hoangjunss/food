@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   * { font-family: 'Inter', sans-serif; }
-h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
+  h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
   body {
     background: #fefaf2;
     background-image: radial-gradient(circle at 10% 30%, rgba(255,225,200,0.3) 2%, transparent 2.5%);
@@ -28,6 +28,10 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
   .tag-asian { background: #ffe4e6; color: #9f1239; border-left: 3px solid #f43f5e; }
   .tag-specialty { background: #fef3c7; color: #854d0e; border-left: 3px solid #eab308; }
   .tag-cafe { background: #f3f4f6; color: #374151; border-left: 3px solid #6b7280; }
+  /* Thêm style cho Dessert và Healthy */
+  .tag-dessert { background: #fce7f3; color: #9d174d; border-left: 3px solid #ec4899; }
+  .tag-healthy { background: #e0f2fe; color: #075985; border-left: 3px solid #0ea5e9; }
+  
   .nav-link { position: relative; padding-bottom: 4px; transition: color 0.2s; cursor: pointer; }
   .nav-link.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2.5px; background: #E76F51; border-radius: 3px; }
   .hero-pattern { background: linear-gradient(125deg, #2A9D8F 0%, #E9C46A 100%); position: relative; overflow: hidden; }
@@ -38,7 +42,6 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
   .page { display: none; }
   .page.active { display: block; }
   
-  /* Chat widget common */
   .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px; background: #fefaf5; }
   .chat-input-area { display: flex; padding: 12px; border-top: 1px solid #eee; background: white; gap: 8px; }
   .chat-input-area input { flex: 1; border: 1px solid #e2e8f0; border-radius: 40px; padding: 10px 16px; outline: none; transition: 0.2s; }
@@ -50,14 +53,6 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
   .bot { background: #e9ecef; color: #1e293b; align-self: flex-start; border-bottom-left-radius: 6px; }
   .typing { font-style: italic; color: #6c757d; background: #f1f3f5; border-radius: 20px; padding: 10px 16px; }
   
-  /* Gemini widget (right) */
-  .chat-widget-gemini { position: fixed; bottom: 24px; right: 24px; z-index: 9999; }
-  .chat-toggle-gemini { background: #E76F51; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: 0.2s; }
-  .chat-toggle-gemini:hover { background: #d45a3a; transform: scale(1.05); }
-  .chat-window-gemini { position: fixed; bottom: 96px; right: 24px; width: 380px; max-width: calc(100vw - 48px); height: 520px; background: white; border-radius: 28px; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.25); display: flex; flex-direction: column; overflow: hidden; transition: 0.2s; z-index: 10000; }
-  .chat-header-gemini { background: #264653; color: white; padding: 14px 18px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
-  
-  /* Groq widget (left) */
   .chat-widget-groq { position: fixed; bottom: 24px; left: 24px; z-index: 9999; }
   .chat-toggle-groq { background: #f97316; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: 0.2s; }
   .chat-toggle-groq:hover { background: #ea580c; transform: scale(1.05); }
@@ -65,7 +60,6 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
   .chat-header-groq { background: #1e293b; color: white; padding: 14px 18px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
   
   @media (max-width:640px) {
-    .chat-window-gemini { width: 300px; height: 480px; right: 12px; bottom: 84px; }
     .chat-window-groq { width: 300px; height: 480px; left: 12px; bottom: 84px; }
   }
 </style>
@@ -87,7 +81,6 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
 
 <!-- Home Page -->
 <div id="page-home" class="page active">
-  <!-- HERO SECTION WITH BACKGROUND IMAGE -->
   <div class="relative h-[500px] md:h-[650px] bg-cover bg-center flex items-center justify-center" 
        style="background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('images/background1.jpg');">
     <div class="relative z-10 text-center text-white max-w-3xl px-5">
@@ -98,7 +91,6 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
     </div>
   </div>
 
-  <!-- MUST-TRY DISHES (unchanged but retains dynamic grid) -->
   <div class="max-w-7xl mx-auto px-5 py-16">
     <div class="flex items-center justify-between mb-8 flex-wrap gap-3">
       <div><h2 class="text-3xl font-bold text-gray-800">🍽️ <span class="border-b-4 border-orange-400 pb-1">Must-try</span> Dishes</h2><p class="text-gray-500 mt-1">Recommendations from the most famous restaurants in District 1</p></div>
@@ -107,7 +99,6 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
     <div id="mustTryGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"></div>
   </div>
 
-  <!-- QUOTE SECTION -->
   <div class="bg-gradient-to-r from-amber-50 to-orange-50 py-12 my-6">
     <div class="max-w-5xl mx-auto px-5 text-center">
       <i class="fa fa-quote-left text-4xl text-orange-300 mb-3"></i>
@@ -115,7 +106,6 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
     </div>
   </div>
 
-  <!-- POPULAR RESTAURANTS (dynamic grid) -->
   <div class="max-w-7xl mx-auto px-5 py-12">
     <h2 class="text-2xl font-bold text-gray-800 mb-6"><i class="fa fa-fire text-orange-500 mr-2"></i> Popular Restaurants</h2>
     <div id="featuredGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7"></div>
@@ -126,7 +116,7 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
 <div id="page-list" class="page">
   <div class="max-w-7xl mx-auto px-5 py-10">
     <div class="flex flex-wrap justify-between items-center mb-6 gap-3">
-      <div><h2 class="text-3xl font-bold text-gray-800">📋 All Restaurants</h2><p class="text-gray-500"><span id="totalCount">36</span> restaurants – from budget to high-end</p></div>
+      <div><h2 class="text-3xl font-bold text-gray-800">📋 All Restaurants</h2><p class="text-gray-500"><span id="totalCount">50+</span> restaurants – from budget to high-end</p></div>
     </div>
     <div class="flex flex-wrap gap-2 my-4" id="filterBar"></div>
     <div class="relative mb-8">
@@ -146,21 +136,18 @@ h1, h2, h3, .logo-font { font-family: 'Inter', sans-serif; }
   </div>
 </div>
 
-<!-- Gemini Chatbot (right) -->
-
-
-<!-- Groq Chatbot (left) -->
+<!-- Groq Chatbot -->
 <div class="chat-widget-groq">
   <div class="chat-toggle-groq" id="chatToggleGroq"><i class="fa-brands fa-gripfire text-2xl text-white"></i></div>
   <div id="chatWindowGroq" class="chat-window-groq hidden">
     <div class="chat-header-groq"><span><i class="fa-brands fa-gripfire"></i> Groq AI (Llama 3)</span><i class="fa-solid fa-times cursor-pointer" id="closeChatGroq"></i></div>
-    <div id="chatMessagesGroq" class="chat-messages"><div class="message bot">🔥 Hi! I'm a Groq chatbot (Llama 3). Ask me about District 1 restaurants!</div></div>
-    <div class="chat-input-area"><input type="text" id="chatInputGroq" placeholder="Ask about food, price, location..."><button id="sendChatGroq">Send</button></div>
+    <div id="chatMessagesGroq" class="chat-messages"><div class="message bot">🔥 Xin chào! I'm Groq AI. Ask me about District 1 restaurants, halal spots, vegetarian gems, or price ranges!</div></div>
+    <div class="chat-input-area"><input type="text" id="chatInputGroq" placeholder="e.g., Best Halal restaurant near Ben Thanh?"><button id="sendChatGroq">Send</button></div>
   </div>
 </div>
 
 <script>
-// ===================== RESTAURANTS DATA (ENGLISH, WITH ENGLISH TAGS) =====================
+// ===================== RESTAURANTS DATA =====================
 const RESTAURANTS = [
   {id:1,name:"Halal@Saigon Restaurant",address:"31 Dong Du, Ben Nghe Ward",must_try:"Nasi Goreng Fried Rice, Goat Curry",hours:"10am-10pm",price_range:"80-150K",tags:["Halal"],description:"Cozy space opposite the mosque, attentive service.",image:"images/halal saigon.png"},
   {id:2,name:"Kampung Melayu",address:"31 Nguyen An Ninh, Ben Thanh Ward",must_try:"Teh Tarik Pulled Tea, Chicken Rice",hours:"6am-11pm",price_range:"40-90K",tags:["Halal"],description:"Affordable, bustling, authentic Malaysian vibe.",image:"images/kampung melayu.png"},
@@ -177,11 +164,11 @@ const RESTAURANTS = [
   {id:13,name:"48 Bistro",address:"52 Le Thi Rieng, Ben Thanh Ward",must_try:"Pan-seared Foie Gras, Pepper Sauce Steak",hours:"10am-10pm",price_range:"200-500K",tags:["Western"],description:"Classic French style, quiet, reasonable price for quality.",image:"images/48 bistro.png"},
   {id:14,name:"Kobe Bistro (Michelin Selected)",address:"23C Ton Duc Thang, Ben Nghe Ward",must_try:"Premium Beefsteak dishes",hours:"10am-10pm",price_range:"400-1500K",tags:["Western"],description:"Luxurious, quiet, suitable for important parties.",image:"images/kobe bistro.png"},
   {id:15,name:"Maison Man Do",address:"27J Tran Nhat Duat, Tan Dinh Ward",must_try:"Steamed Cod with Soy Sauce, Crispy Pork Belly, Pomelo Shrimp Salad",hours:"7:30am-11pm",price_range:"150-350K",tags:["Western","Asian"],description:"French classical architecture, nostalgic, garden view.",image:"images/mận đỏ.png"},
-  {id:16,name:"Dim Tu Tac",address:"55 Dong Du, Ben Nghe Ward",must_try:"Fresh Shrimp Dumplings, Peking Duck",hours:"10am-10pm",price_range:"200-500K",tags:["Asian"],description:"Luxurious, upscale Chinese restaurant, professional service.",image:"images/dim tu tac.png"},
+  {id:16,name:"Dim Tu Tac",address:"55 Dong Du, Ben Nghe Ward",must_try:"Fresh Shrimp Dumplings, Peking Duck",hours:"10am-10pm",price_range:"200-500K",tags:["Asian"],description:"Luxurious, upscale Chinese restaurant, professional service.",image:"images/dim tutac.jpg"},
   {id:17,name:"Pachi Pachi",address:"52 Mac Dinh Chi, Da Kao Ward",must_try:"Tare Sauce Grilled Meat, Shabu Shabu Paper Hotpot, Sizzling Stone Rice",hours:"10:30am-11pm",price_range:"250-550K",tags:["Asian"],description:"Japanese izakaya style, cozy private, smoke-free grill.",image:"images/pachi.png"},
   {id:18,name:"Go Thai Noodle",address:"150 Nguyen Trai, Ben Thanh Ward",must_try:"Pad Thai, Thai Noodles",hours:"10am-10pm",price_range:"50-120K",tags:["Asian"],description:"Thai street decor, energetic, colorful, popular with youth.",image:"images/gõ thai noodle.png"},
   {id:19,name:"Ebisu",address:"35 Mac Dinh Chi, Da Kao Ward",must_try:"Handmade Udon Noodles, Cold Tofu, Salmon Head Hotpot",hours:"11am-10pm",price_range:"150-350K",tags:["Asian"],description:"Traditional Japanese wood interior, quiet, polite.",image:"images/ebisu.png"},
-  {id:20,name:"Com Nieu Thien Ly",address:"16 Nguyen Dinh Chieu, Da Kao Ward",must_try:"Claypot Rice with Crispy Crust, Braised Fish in Clay Pot",hours:"10am-9:30pm",price_range:"60-150K",tags:["Specialty"],description:"Family atmosphere, homestyle cooking.",image:"images/com nieu thien ly.png"},
+  {id:20,name:"Com Nieu Thien Ly",address:"16 Nguyen Dinh Chieu, Da Kao Ward",must_try:"Claypot Rice with Crispy Crust, Braised Fish in Clay Pot",hours:"10am-9:30pm",price_range:"60-150K",tags:["Specialty"],description:"Family atmosphere, homestyle cooking.",image:"images/cơm niêu thiên lý.jpg"},
   {id:21,name:"Quan Bui Original",address:"19 Ngo Van Nam, Ben Nghe Ward",must_try:"Crab Spring Rolls, Young Sour Soup with Pork Ribs",hours:"7:30am-11pm",price_range:"100-250K",tags:["Specialty"],description:"Classic street view, vintage tile decor, artistic and delicate.",image:"images/quán bụi.png"},
   {id:22,name:"Lau Cua Khoi",address:"18A Nguyen Thi Minh Khai, Da Kao Ward",must_try:"Crab Roe Hotpot, Tamarind Crab",hours:"3pm-10pm",price_range:"300-700K",tags:["Specialty"],description:"Relaxed space, focus on food quality.",image:"images/lẩu cua khôi.png"},
   {id:23,name:"Pho Minh (Bib Gourmand)",address:"63 Pasteur, Ben Nghe Ward",must_try:"Traditional Northern-style Pho with Well-done and Rare Beef",hours:"6am-10am",price_range:"50-100K",tags:["Specialty"],description:"In a quiet alley, preserving old Saigon architecture since 1950.",image:"images/phở minh.png"},
@@ -191,7 +178,7 @@ const RESTAURANTS = [
   {id:27,name:"An Nam Quan",address:"59 Nguyen Binh Khiem, Da Kao Ward",must_try:"Whole Chicken Tray (4 dishes), Thang Long Fish Cake, Chicken Gizzard Stir-fried with Loofah",hours:"10am-10:30pm",price_range:"90-220K",tags:["Specialty"],description:"Spacious, rustic Central Vietnamese style.",image:"images/an nam quán.png"},
   {id:28,name:"Bun Thit Nuong Chi Tuyen",address:"175 Co Giang, Co Giang Ward",must_try:"Grilled Pork Noodles, Crispy Spring Rolls",hours:"7:30am-8pm",price_range:"35-70K",tags:["Specialty"],description:"Family-run, bustling, authentic Saigon life.",image:"images/bún thịt nướng chị tuyền.png"},
   {id:29,name:"Hu Tieu My Tho Thanh Xuan",address:"62 Ton That Thiep, Ben Nghe Ward",must_try:"Dry Hu Tieu with Special Sauce, Banh Cong, Seafood Soup",hours:"6am-2pm",price_range:"40-80K",tags:["Specialty"],description:"Small, long-standing shop, nostalgic feel, near Ben Thanh Market.",image:"images/hủ tíu thanh xuân.png"},
-  {id:30,name:"Tan Hai Van",address:"158 Nguyen Trai, Ben Thanh Ward",must_try:"Roasted Pigeon, Morning Dim Sum, Crab Cellophane Noodles",hours:"6am-11pm",price_range:"150-400K",tags:["Asian"],description:"Retro space, two floors, open very late for night cravings.",image:"images/tan hai van.png"},
+  {id:30,name:"Tan Hai Van",address:"158 Nguyen Trai, Ben Thanh Ward",must_try:"Roasted Pigeon, Morning Dim Sum, Crab Cellophane Noodles",hours:"6am-11pm",price_range:"150-400K",tags:["Asian"],description:"Retro space, two floors, open very late for night cravings.",image:"images/tân hải vân.jpg"},
   {id:31,name:"Cafe De La Poste",address:"2 Cong Xa Paris, Ben Nghe Ward",must_try:"Traditional Vietnamese Iced Coffee, fruit juices",hours:"7:30am-10pm",price_range:"40-90K",tags:["Cafe","Dessert"],description:"Classic French architecture, view of Notre Dame Cathedral.",image:"images/cà phê de la poste.png"},
   {id:32,name:"Dabao Concept",address:"3rd Floor, 151 Dong Khoi, Ben Nghe Ward",must_try:"Pink Grapefruit Tea, Salted Coffee",hours:"9:30am-9pm",price_range:"50-110K",tags:["Cafe","Dessert"],description:"Inside an old apartment building, nostalgic decor, quiet.",image:"images/dabao concept.png"},
   {id:33,name:"Okkio Caffe",address:"122 Le Loi, Ben Thanh Ward",must_try:"Egg Coffee, Cold Brew",hours:"7:30am-10pm",price_range:"45-100K",tags:["Cafe","Dessert"],description:"Signature brick-red color, right near Ben Thanh Market, small but elegant.",image:"images/okkio cafe.png"},
@@ -217,9 +204,14 @@ const RESTAURANTS = [
   {id:53,name:"Bun dau Ngo Nho Pho Nho",address:"158 Pasteur, Ben Nghe Ward",must_try:"Bun Gia Cay, Bun Cha, Bun Dau, Fried Spring Rolls",hours:"10am-8pm",price_range:"35-80K",tags:["Specialty"],description:"Authentic Hanoi flavors, cozy nostalgic decor, friendly staff.",image:"images/bún đậu phố nhỏ.png"}
 ];
 const FALLBACK_IMG = "https://picsum.photos/id/200/400/280";
-RESTAURANTS.forEach(r => { r.imgUrl = r.image || FALLBACK_IMG; });
 
-// ===================== HELPER FUNCTIONS (ENGLISH TAGS) =====================
+RESTAURANTS.forEach(r => {
+  const fullQuery = `${r.name}, ${r.address}, District 1, Ho Chi Minh City, Vietnam`;
+  r.googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullQuery)}`;
+  r.imgUrl = r.image || FALLBACK_IMG;
+});
+
+// ===================== HELPER FUNCTIONS (đã sửa để hỗ trợ Dessert & Healthy) =====================
 let currentFilter = "all";
 function tagClass(tag) {
   const map = {
@@ -228,23 +220,21 @@ function tagClass(tag) {
     'Western': 'tag-western',
     'Asian': 'tag-asian',
     'Specialty': 'tag-specialty',
-    'Cafe': 'tag-cafe'
+    'Cafe': 'tag-cafe',
+    'Dessert': 'tag-dessert',
+    'Healthy': 'tag-healthy'
   };
   return 'badge ' + (map[tag] || 'tag-default');
 }
 function tagIcon(tag) {
   const icons = {
-    'Vegetarian': '🥬',
-    'Halal': '🕌',
-    'Western': '🍝',
-    'Asian': '🥢',
-    'Specialty': '🏮',
-    'Cafe': '☕'
+    'Vegetarian': '🥬', 'Halal': '🕌', 'Western': '🍝', 'Asian': '🥢',
+    'Specialty': '🏮', 'Cafe': '☕', 'Dessert': '🍰', 'Healthy': '🥗'
   };
   return icons[tag] || '🏷️';
 }
 function renderTags(tags) {
-  return tags.map(t => `<span class="${tagClass(t)}"><i class="fa ${t==='Vegetarian'?'fa-leaf':t==='Halal'?'fa-mosque':t==='Western'?'fa-egg':t==='Asian'?'fa-ramen':t==='Cafe'?'fa-mug-hot':'fa-tag'} mr-1"></i>${t}</span>`).join(' ');
+  return tags.map(t => `<span class="${tagClass(t)}"><i class="fa ${t==='Vegetarian'?'fa-leaf':t==='Halal'?'fa-mosque':t==='Western'?'fa-egg':t==='Asian'?'fa-ramen':t==='Cafe'?'fa-mug-hot':t==='Dessert'?'fa-ice-cream':t==='Healthy'?'fa-apple-alt':'fa-tag'} mr-1"></i>${t}</span>`).join(' ');
 }
 function renderCard(r) {
   return `<div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg cursor-pointer transition-all" onclick="showPage('detail',${r.id})">
@@ -268,10 +258,17 @@ function renderDetail(id) {
     <img src="${r.imgUrl}" class="w-full rounded-2xl shadow-lg max-h-96 object-cover" onerror="this.src='${FALLBACK_IMG}'">
     <div class="flex flex-wrap gap-2 my-4">${renderTags(r.tags)}</div>
     <h1 class="text-3xl font-bold text-gray-800">${r.name}</h1>
-    <p class="text-gray-500 mt-1"><i class="fa fa-map-marker-alt text-orange-500 mr-1"></i> ${r.address}</p>
+    <div class="flex flex-wrap justify-between items-start mt-2 gap-2">
+      <p class="text-gray-500"><i class="fa fa-map-marker-alt text-orange-500 mr-1"></i> ${r.address}</p>
+      <a href="${r.googleMapUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-orange-100 hover:bg-orange-200 text-orange-700 font-medium px-4 py-2 rounded-full transition text-sm"><i class="fab fa-google"></i> Google Maps</a>
+    </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6"><div class="bg-amber-50 p-4 rounded-xl"><i class="fa fa-clock text-amber-600 mr-2"></i><span class="font-semibold">Hours:</span> ${r.hours}</div><div class="bg-amber-50 p-4 rounded-xl"><i class="fa fa-tag text-amber-600 mr-2"></i><span class="font-semibold">Price:</span> ${r.price_range} VND</div></div>
     <div class="bg-orange-50 p-5 rounded-2xl"><p class="font-bold text-orange-700">🍽️ Must try:</p><p class="text-gray-700">${r.must_try}</p></div>
-    <p class="mt-5 text-gray-700">${r.description}</p>`;
+    <p class="mt-5 text-gray-700">${r.description}</p>
+    <div class="mt-6 pt-4 border-t border-orange-100 flex justify-center">
+      <a href="${r.googleMapUrl}" target="_blank" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-xl shadow-md transition inline-flex items-center gap-3"><i class="fas fa-map-marked-alt text-lg"></i> Open in Google Maps – Get Direction</a>
+    </div>
+  `;
 }
 function showPage(page, id = null) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
@@ -301,99 +298,23 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 window.showPage = showPage;
 
-// ===================== GEMINI CHATBOT =====================
-const GEMINI_FUNCTION_URL = "/.netlify/functions/gemini";
-const lightContextGemini = RESTAURANTS.map(r => `${r.name} (${r.tags.join(',')}) ${r.price_range} - dish: ${r.must_try.split(',')[0]} - ${r.address}`).join('\n');
-const systemPromptGemini = `You are a professional food assistant for District 1, Ho Chi Minh City. Based on the following restaurant list (name - tag - price - dish - address):\n${lightContextGemini}\nAnswer questions in English, friendly, and provide specific suggestions. If the question is out of scope, say 'I only know about District 1 restaurants.'`;
-
-let geminiHistory = [
-  { role: "user", parts: [{ text: systemPromptGemini }] },
-  { role: "model", parts: [{ text: "OK, I'm ready to advise on District 1 food for you." }] }
-];
-async function askGemini(question) {
-  let contents = [...geminiHistory, { role: "user", parts: [{ text: question }] }];
-  try {
-    const res = await fetch(GEMINI_FUNCTION_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contents, generationConfig: { temperature: 0.6, maxOutputTokens: 4000 } })
-    });
-    const data = await res.json();
-    if (data.error) return `⚠️ Gemini error: ${data.error.message || JSON.stringify(data.error)}`;
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I didn't understand the question.";
-    geminiHistory.push({ role: "user", parts: [{ text: question }] }, { role: "model", parts: [{ text: reply }] });
-    if (geminiHistory.length > 12) geminiHistory = [geminiHistory[0], geminiHistory[1], ...geminiHistory.slice(-8)];
-    return reply;
-  } catch(e) { return "🔌 Gemini connection error."; }
-}
-/*
-// Gemini UI
-const chatToggleGemini = document.getElementById("chatToggleGemini");
-const chatWindowGemini = document.getElementById("chatWindowGemini");
-const closeChatGemini = document.getElementById("closeChatGemini");
-const chatMessagesGemini = document.getElementById("chatMessagesGemini");
-const chatInputGemini = document.getElementById("chatInputGemini");
-const sendBtnGemini = document.getElementById("sendChatGemini");
-chatToggleGemini.onclick = () => chatWindowGemini.classList.toggle("hidden");
-closeChatGemini.onclick = () => chatWindowGemini.classList.add("hidden");
-function addMessageGemini(text, isUser) {
-  const d = document.createElement("div"); d.className = `message ${isUser ? "user" : "bot"}`; d.innerHTML = text.replace(/\n/g, "<br>");
-  chatMessagesGemini.appendChild(d); chatMessagesGemini.scrollTop = chatMessagesGemini.scrollHeight;
-}
-let processingGemini = false;
-async function handleSendGemini() {
-  if (processingGemini) return;
-  const q = chatInputGemini.value.trim();
-  if (!q) return;
-  addMessageGemini(q, true);
-  chatInputGemini.value = "";
-  processingGemini = true;
-  let typing = document.createElement("div"); typing.className = "typing"; typing.id = "typingGemini"; typing.innerText = "Thinking...";
-  chatMessagesGemini.appendChild(typing);
-  chatMessagesGemini.scrollTop = chatMessagesGemini.scrollHeight;
-  const reply = await askGemini(q);
-  document.getElementById("typingGemini")?.remove();
-  addMessageGemini(reply, false);
-  processingGemini = false;
-}
-sendBtnGemini.onclick = handleSendGemini;
-chatInputGemini.addEventListener("keypress", e => { if (e.key === "Enter") handleSendGemini(); });
-*/
 // ===================== GROQ CHATBOT =====================
 const GROQ_FUNCTION_URL = "/.netlify/functions/groq";
 const lightContextGroq = RESTAURANTS.map(r => `${r.name} (${r.tags.join(',')}) ${r.price_range} - dish: ${r.must_try.split(',')[0]} - ${r.address}`).join('\n');
 const systemPromptGroq = `You are a professional food assistant for District 1, Ho Chi Minh City. Based on the following restaurant list (name - tag - price - dish - address):\n${lightContextGroq}\nAnswer questions in English, friendly, and provide specific suggestions. If the question is out of scope, say 'I only know about District 1 restaurants.'`;
-
 let groqHistory = [];
 async function askGroq(question) {
-  const messages = [
-    { role: "system", content: systemPromptGroq },
-    ...groqHistory,
-    { role: "user", content: question }
-  ];
+  const messages = [ { role: "system", content: systemPromptGroq }, ...groqHistory, { role: "user", content: question } ];
   try {
-    const res = await fetch(GROQ_FUNCTION_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        messages: messages,
-        model: "llama-3.3-70b-versatile",
-        temperature: 0.7,
-        max_tokens: 800
-      })
-    });
+    const res = await fetch(GROQ_FUNCTION_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ messages, model: "llama-3.3-70b-versatile", temperature: 0.7, max_tokens: 800 }) });
     const data = await res.json();
     if (data.error) return `⚠️ Groq error: ${data.error.message}`;
     const reply = data.choices?.[0]?.message?.content || "Sorry, I didn't understand.";
     groqHistory.push({ role: "user", content: question }, { role: "assistant", content: reply });
     if (groqHistory.length > 20) groqHistory = groqHistory.slice(-20);
     return reply;
-  } catch(e) {
-    console.error(e);
-    return "🔌 Groq connection error.";
-  }
+  } catch(e) { return "🔌 Groq connection error. Please try again later."; }
 }
-// Groq UI
 const chatToggleGroq = document.getElementById("chatToggleGroq");
 const chatWindowGroq = document.getElementById("chatWindowGroq");
 const closeChatGroq = document.getElementById("closeChatGroq");
@@ -415,8 +336,7 @@ async function handleSendGroq() {
   chatInputGroq.value = "";
   processingGroq = true;
   let typing = document.createElement("div"); typing.className = "typing"; typing.id = "typingGroq"; typing.innerText = "Thinking...";
-  chatMessagesGroq.appendChild(typing);
-  chatMessagesGroq.scrollTop = chatMessagesGroq.scrollHeight;
+  chatMessagesGroq.appendChild(typing); chatMessagesGroq.scrollTop = chatMessagesGroq.scrollHeight;
   const reply = await askGroq(q);
   document.getElementById("typingGroq")?.remove();
   addMessageGroq(reply, false);
